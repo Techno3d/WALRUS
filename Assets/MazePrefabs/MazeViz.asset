@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99cc8d697a18665598e1c22e11326f81, type: 3}
+  m_Name: MazeViz
+  m_EditorClassIdentifier: 
+  end: {fileID: 0}
+  straight: {fileID: 0}
+  corner: {fileID: 0}
+  tJunction: {fileID: 0}
+  xJunction: {fileID: 0}
