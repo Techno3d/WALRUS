@@ -10,19 +10,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2535113979781458784, guid: cc9ed6323ca588343a4b49bce6abf299, type: 3}
       propertyPath: m_Name
-      value: Maze_TJunction Variant
+      value: Maze_TJunction_OpenNE
       objectReference: {fileID: 0}
     - target: {fileID: 2535113979781948870, guid: cc9ed6323ca588343a4b49bce6abf299, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 21.64136
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2535113979781948870, guid: cc9ed6323ca588343a4b49bce6abf299, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.000001136496
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2535113979781948870, guid: cc9ed6323ca588343a4b49bce6abf299, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 7.85535
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2535113979781948870, guid: cc9ed6323ca588343a4b49bce6abf299, type: 3}
       propertyPath: m_LocalRotation.w

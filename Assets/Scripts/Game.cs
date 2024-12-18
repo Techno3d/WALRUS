@@ -12,7 +12,7 @@ public class Game : MonoBehaviour
 	MazeVisualization visualization;
 
 	[SerializeField]
-	int2 mazeSize = int2(15, 15);
+	int2 mazeSize = int2(20, 20);
 
 	[SerializeField, Tooltip("Use zero for random seed.")]
 	int seed;

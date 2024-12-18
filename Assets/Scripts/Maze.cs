@@ -34,9 +34,9 @@ public struct Maze
 
 	public Vector3 CoordinatesToWorldPosition (int2 coordinates, float y = 0f) =>
 		new Vector3(
-			1.5f * coordinates.x + 1f - size.x,
+			6f * coordinates.x + 3f - size.x,
 			y,
-			1.5f * coordinates.y + 1f - size.y
+			6f * coordinates.y + 3f - size.y
 		);
 
 	public Vector3 IndexToWorldPosition (int index, float y = 0f) =>

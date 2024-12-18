@@ -72,7 +72,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6657893924908089765, guid: 7fd91eaeea1aefc46ae234c22ff0d0cc, type: 3}
       propertyPath: m_Name
-      value: Maze_Corner 1 Variant
+      value: Maze_TJunction
       objectReference: {fileID: 0}
     - target: {fileID: 6657893924908519171, guid: 7fd91eaeea1aefc46ae234c22ff0d0cc, type: 3}
       propertyPath: m_LocalPosition.x
@@ -122,8 +122,28 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6657893924908519171, guid: 7fd91eaeea1aefc46ae234c22ff0d0cc, type: 3}
       insertIndex: 4
       addedObject: {fileID: 7589988879818657199}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6657893924908089765, guid: 7fd91eaeea1aefc46ae234c22ff0d0cc, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6350804520884429527}
   m_SourcePrefab: {fileID: 100100000, guid: 7fd91eaeea1aefc46ae234c22ff0d0cc, type: 3}
+--- !u!1 &2535113979781458784 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6657893924908089765, guid: 7fd91eaeea1aefc46ae234c22ff0d0cc, type: 3}
+  m_PrefabInstance: {fileID: 9172459719147711173}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6350804520884429527
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2535113979781458784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c230cd5d613743d01b1b60058b1dc589, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &2535113979781948870 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6657893924908519171, guid: 7fd91eaeea1aefc46ae234c22ff0d0cc, type: 3}

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99cc8d697a18665598e1c22e11326f81, type: 3}
   m_Name: MazeViz
   m_EditorClassIdentifier: 
-  end: {fileID: 0}
-  straight: {fileID: 0}
-  corner: {fileID: 0}
-  tJunction: {fileID: 0}
-  xJunction: {fileID: 0}
+  end: {fileID: 4531171231425505816, guid: 37ab2f46cdb908045a36434a2e5c88b8, type: 3}
+  straight: {fileID: 7141892450415097042, guid: f099a53a57f171c48b8b0e0db5d70e35, type: 3}
+  corner: {fileID: 5412754904219899710, guid: 7fd91eaeea1aefc46ae234c22ff0d0cc, type: 3}
+  tJunction: {fileID: 6350804520884429527, guid: cc9ed6323ca588343a4b49bce6abf299, type: 3}
+  xJunction: {fileID: 3482131109967607349, guid: ebb3848f14245264cba1751d4d0ad0c8, type: 3}

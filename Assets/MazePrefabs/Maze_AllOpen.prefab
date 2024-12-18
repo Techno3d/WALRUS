@@ -10,11 +10,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6205593958153494113, guid: c5895800897e26844afab42d8ed65c0c, type: 3}
       propertyPath: m_Name
-      value: Maze_4Open Variant
+      value: Maze_AllOpen
       objectReference: {fileID: 0}
     - target: {fileID: 6371567767962498564, guid: c5895800897e26844afab42d8ed65c0c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 27.130333
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6371567767962498564, guid: c5895800897e26844afab42d8ed65c0c, type: 3}
       propertyPath: m_LocalPosition.y
@@ -22,7 +22,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6371567767962498564, guid: c5895800897e26844afab42d8ed65c0c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 7.746436
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6371567767962498564, guid: c5895800897e26844afab42d8ed65c0c, type: 3}
       propertyPath: m_LocalRotation.w

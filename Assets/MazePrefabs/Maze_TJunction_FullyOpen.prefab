@@ -10,15 +10,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5421414018343598588, guid: 7f6a88a67404da04c907aef8beeec19b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 22.559013
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5421414018343598588, guid: 7f6a88a67404da04c907aef8beeec19b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.000001136496
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5421414018343598588, guid: 7f6a88a67404da04c907aef8beeec19b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 10.022971
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5421414018343598588, guid: 7f6a88a67404da04c907aef8beeec19b, type: 3}
       propertyPath: m_LocalRotation.w
@@ -50,7 +50,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5421414018343958362, guid: 7f6a88a67404da04c907aef8beeec19b, type: 3}
       propertyPath: m_Name
-      value: Maze_TJunction Variant
+      value: Maze_TJunction_FullyOpen
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
