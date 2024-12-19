@@ -8,10 +8,10 @@ public class MazeVisualization : ScriptableObject
 
 	static Quaternion[] rotations =
 	{
-		Quaternion.Euler(0, 0, 0),
+		Quaternion.Euler(0, -90, 0),
+		Quaternion.Euler(0f, 0f, 0f),
 		Quaternion.Euler(0f, 90f, 0f),
-		Quaternion.Euler(0f, 180f, 0f),
-		Quaternion.Euler(0f, 270f, 0f)
+		Quaternion.Euler(0f, 180f, 0f)
 	};
 
 	public void Visualize (Maze maze)
