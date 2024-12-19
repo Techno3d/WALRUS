@@ -70,6 +70,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 347885332633693287, guid: 7fd91eaeea1aefc46ae234c22ff0d0cc, type: 3}
+      propertyPath: m_Range
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 347885332633693287, guid: 7fd91eaeea1aefc46ae234c22ff0d0cc, type: 3}
+      propertyPath: m_Intensity
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6657893924908089765, guid: 7fd91eaeea1aefc46ae234c22ff0d0cc, type: 3}
       propertyPath: m_Name
       value: Maze_TJunction
@@ -118,6 +126,7 @@ PrefabInstance:
     m_RemovedGameObjects:
     - {fileID: 3603561628761536186, guid: 7fd91eaeea1aefc46ae234c22ff0d0cc, type: 3}
     - {fileID: 7653607845057309463, guid: 7fd91eaeea1aefc46ae234c22ff0d0cc, type: 3}
+    - {fileID: 347885332640103351, guid: 7fd91eaeea1aefc46ae234c22ff0d0cc, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 6657893924908519171, guid: 7fd91eaeea1aefc46ae234c22ff0d0cc, type: 3}
       insertIndex: 4
