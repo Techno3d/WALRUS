@@ -340,8 +340,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   visualization: {fileID: 11400000, guid: 5ba9bd8e94aac2f319d90d83306c75f3, type: 2}
   mazeSize:
-    x: 5
-    y: 5
+    x: 10
+    y: 10
   seed: 0
 --- !u!4 &1344457566
 Transform:
