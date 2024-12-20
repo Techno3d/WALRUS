@@ -6,8 +6,8 @@ using UnityEngine.InputSystem;
 public class MainPlayer : MonoBehaviour
 {
     [Header("Body Settings")]
-    public GameObject FirstBody;
-    public GameObject SecondBody;
+    public PlayerBody FirstBody;
+    public PlayerBody SecondBody;
     private bool isFirstActive = true;
     private GameControls controls;
 
@@ -17,8 +17,7 @@ public class MainPlayer : MonoBehaviour
 
     void Start()
     {
-        FirstBody.SetActive(true);
-        SecondBody.SetActive(false);
+        SwitchBody(isFirstActive);
         Cursor.lockState = CursorLockMode.Locked;
     }
 
@@ -26,13 +25,13 @@ public class MainPlayer : MonoBehaviour
         controls.Enable();
         controls.Player.SwitchCam.performed += (ctx) => {
             isFirstActive = !isFirstActive;
-            SwitchCam(isFirstActive);
+            SwitchBody(isFirstActive);
         };
     }
 
-    void SwitchCam(bool isFirstCamActive) {
-        FirstBody.SetActive(isFirstCamActive);
-        SecondBody.SetActive(!isFirstCamActive);
+    void SwitchBody(bool isFirstCamActive) {
+        FirstBody.enabled = isFirstCamActive;
+        SecondBody.enabled = !isFirstCamActive;
     }
 
     void Update()
