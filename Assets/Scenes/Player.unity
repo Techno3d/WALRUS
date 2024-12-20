@@ -201,7 +201,7 @@ MonoBehaviour:
   controller: {fileID: 89784914}
   speed: 12
   gravity: 9.81
-  maxAirTime: 0.05
+  maxAirTime: 0.2
 --- !u!1 &123941280
 GameObject:
   m_ObjectHideFlags: 0
