@@ -5,39 +5,38 @@ using UnityEngine.InputSystem;
 
 public class MainPlayer : MonoBehaviour
 {
-    [Header("Camera Settings")]
-    public InputAction switchCamAction;
-    public Camera firstCam;
-    public Camera secondCam;
-    public bool isFirstCamActive = true;
+    [Header("Body Settings")]
+    public GameObject FirstBody;
+    public GameObject SecondBody;
+    private bool isFirstActive = true;
+    private GameControls controls;
+
+    void Awake() {
+        controls = new GameControls();
+    }
 
     void Start()
     {
-        firstCam.enabled = true;
-        secondCam.enabled = false;
-        switchCamAction.performed += (ctx) => {
-            isFirstCamActive = !isFirstCamActive;
-            SwitchCam(isFirstCamActive);
+        FirstBody.SetActive(true);
+        SecondBody.SetActive(false);
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    void OnEnable() {
+        controls.Enable();
+        controls.Player.SwitchCam.performed += (ctx) => {
+            isFirstActive = !isFirstActive;
+            SwitchCam(isFirstActive);
         };
     }
 
     void SwitchCam(bool isFirstCamActive) {
-        firstCam.enabled = isFirstCamActive;
-        secondCam.enabled = !isFirstCamActive;
+        FirstBody.SetActive(isFirstCamActive);
+        SecondBody.SetActive(!isFirstCamActive);
     }
 
     void Update()
     {
         
-    }
-
-    void OnEnable()
-    {
-        switchCamAction.Enable();
-    }
-
-    void OnDisable()
-    {
-        switchCamAction.Disable();
     }
 }
