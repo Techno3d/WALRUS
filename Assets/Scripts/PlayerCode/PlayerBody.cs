@@ -8,6 +8,7 @@ public class PlayerBody : MonoBehaviour
     public Camera cam;
     public AudioListener audioListener;
     public CharacterController controller;
+    public MouseControl mouseControl;
 
     [Header("Speed Settings")]
     public float speed = 12f;
@@ -59,11 +60,13 @@ public class PlayerBody : MonoBehaviour
         controls.Enable();
         cam.enabled = true;
         audioListener.enabled = true;
+        mouseControl.enabled = true;
     }
     
     void OnDisable() {
         controls.Disable();
         cam.enabled = false;
         audioListener.enabled = false;
+        mouseControl.enabled = false;
     }
 }

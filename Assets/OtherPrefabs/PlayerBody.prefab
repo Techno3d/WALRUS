@@ -183,6 +183,7 @@ MonoBehaviour:
   cam: {fileID: 3533401268842428803}
   audioListener: {fileID: 4473916898514030937}
   controller: {fileID: 2163871680399413312}
+  mouseControl: {fileID: 6500770425044898534}
   speed: 12
   gravity: 9.81
   maxAirTime: 0.2
