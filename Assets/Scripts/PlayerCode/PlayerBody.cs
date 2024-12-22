@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerBody : MonoBehaviour
 {
@@ -9,11 +11,17 @@ public class PlayerBody : MonoBehaviour
     public AudioListener audioListener;
     public CharacterController controller;
     public MouseControl mouseControl;
+    public ApplyGravity applyGravity;
 
     [Header("Speed Settings")]
     public float speed = 12f;
     public float gravity = 9.81f;
     public float maxAirTime = 0.2f;
+
+
+    [Header("Attack Settings")]
+    public GameObject beam;
+    public float BeamRange = 5f;
 
     private Vector3 velocity = Vector3.zero;
     private GameControls controls;
@@ -26,7 +34,10 @@ public class PlayerBody : MonoBehaviour
 
     void Start()
     {
-        
+        applyGravity = GetComponent<ApplyGravity>();
+        applyGravity.gravity = gravity;
+        applyGravity.controller = controller;
+        applyGravity.enabled = false;
     }
 
     void Update()
@@ -54,6 +65,25 @@ public class PlayerBody : MonoBehaviour
         }
         
         controller.Move(velocity * Time.deltaTime);
+        
+        if(controls.Player.Attack.IsPressed()) {
+            beam.SetActive(true);
+            AttackBeam();
+        } else {
+            beam.SetActive(false);
+        }
+    }
+
+    void AttackBeam()
+    {
+        RaycastHit hit;
+        if(Physics.Raycast(transform.position, transform.forward, out hit, BeamRange)) {
+            beam.transform.localScale = new Vector3(1, 1, hit.distance);
+            beam.transform.localRotation = Quaternion.Euler(cam.transform.localEulerAngles.x, Mathf.Atan2(hit.distance, 0.7f)*Mathf.Rad2Deg-90, 0);
+        } else {
+            beam.transform.localScale = new Vector3(1, 1, BeamRange);
+            beam.transform.localRotation = Quaternion.Euler(cam.transform.localEulerAngles.x, Mathf.Atan2(BeamRange, 0.7f)*Mathf.Rad2Deg-90, 0);
+        }
     }
 
     void OnEnable() {
@@ -61,12 +91,16 @@ public class PlayerBody : MonoBehaviour
         cam.enabled = true;
         audioListener.enabled = true;
         mouseControl.enabled = true;
+        velocity = applyGravity.velocity;
+        applyGravity.enabled = false;
     }
-    
+
     void OnDisable() {
         controls.Disable();
         cam.enabled = false;
         audioListener.enabled = false;
         mouseControl.enabled = false;
+        applyGravity.enabled = true;
+        applyGravity.velocity = velocity;
     }
 }
