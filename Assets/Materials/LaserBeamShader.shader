@@ -38,7 +38,10 @@ Shader "Unlit/LaserBeamShader"
             v2f vert (appdata v)
             {
                 v2f o;
-                o.vertex = UnityObjectToClipPos(v.vertex);
+                float3 vnew = v.vertex; 
+                float zthing = v.vertex.z-0.22;
+                vnew.x += lerp(sin(_Time * 30 + v.vertex.z) * .2, 0, (zthing*zthing)*1);
+                o.vertex = UnityObjectToClipPos(vnew);
                 o.uv = TRANSFORM_TEX(v.uv, _MainTex);
                 return o;
             }
@@ -51,8 +54,8 @@ Shader "Unlit/LaserBeamShader"
                 fixed4 col2 = tex2D(_Tex, i.uv-_Time*0.6)-0.1;
                 col2.g = step(1.-col.g, 0.86);
                 fixed4 finalCol = col+col2;
-                finalCol = lerp(fixed4(1., 1., 1., 1.), finalCol, step(0.2, finalCol.g));
-                finalCol.a = smoothstep(0, 0.2, finalCol.g)-0.5;
+                finalCol = lerp(fixed4(.2, .2, .2, .0), finalCol, step(0.2, finalCol.g));
+                finalCol.a = smoothstep(.0, 0.4, finalCol.g)-0.5;
                 return finalCol;
             }
             ENDCG
