@@ -78,6 +78,14 @@ PrefabInstance:
       propertyPath: m_Intensity
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 622092853170651713, guid: 7fd91eaeea1aefc46ae234c22ff0d0cc, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 2.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 5426649722512834172, guid: 7fd91eaeea1aefc46ae234c22ff0d0cc, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 2.25
+      objectReference: {fileID: 0}
     - target: {fileID: 6657893924908089765, guid: 7fd91eaeea1aefc46ae234c22ff0d0cc, type: 3}
       propertyPath: m_Name
       value: Maze_TJunction
@@ -127,6 +135,7 @@ PrefabInstance:
     - {fileID: 3603561628761536186, guid: 7fd91eaeea1aefc46ae234c22ff0d0cc, type: 3}
     - {fileID: 7653607845057309463, guid: 7fd91eaeea1aefc46ae234c22ff0d0cc, type: 3}
     - {fileID: 347885332640103351, guid: 7fd91eaeea1aefc46ae234c22ff0d0cc, type: 3}
+    - {fileID: 347885332640051907, guid: 7fd91eaeea1aefc46ae234c22ff0d0cc, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 6657893924908519171, guid: 7fd91eaeea1aefc46ae234c22ff0d0cc, type: 3}
       insertIndex: 4

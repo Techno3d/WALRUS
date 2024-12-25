@@ -12,6 +12,10 @@ PrefabInstance:
       propertyPath: m_Intensity
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2304490935915771070, guid: 7f6a88a67404da04c907aef8beeec19b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 2.75
+      objectReference: {fileID: 0}
     - target: {fileID: 5421414018343598588, guid: 7f6a88a67404da04c907aef8beeec19b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -55,6 +59,10 @@ PrefabInstance:
     - target: {fileID: 5421414018343958362, guid: 7f6a88a67404da04c907aef8beeec19b, type: 3}
       propertyPath: m_Name
       value: Maze_TJunction_FullyOpen
+      objectReference: {fileID: 0}
+    - target: {fileID: 6635624448085936259, guid: 7f6a88a67404da04c907aef8beeec19b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 2.75
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
