@@ -104,5 +104,6 @@ public class PlayerBody : MonoBehaviour
         mouseControl.enabled = false;
         applyGravity.enabled = true;
         applyGravity.velocity = velocity;
+        beam.SetActive(false);
     }
 }
