@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,7 @@ public class MainPlayer : MonoBehaviour
     public PlayerBody SecondBody;
     private bool isFirstActive = true;
     private GameControls controls;
+    public static event Action SwitchedBody;
 
     void Awake() {
         controls = new GameControls();

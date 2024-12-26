@@ -22,6 +22,8 @@ public class PlayerBody : MonoBehaviour
     [Header("Attack Settings")]
     public GameObject beam;
     public float BeamRange = 5f;
+    [NonSerialized]
+    public bool isFiringBeam = false;
 
     private Vector3 velocity = Vector3.zero;
     private GameControls controls;
