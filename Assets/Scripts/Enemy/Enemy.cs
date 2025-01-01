@@ -10,14 +10,14 @@ public class Enemy : MonoBehaviour
     // Essentially, using the player stats array, I will change this matrix. Not really a POMDP or an HMM
     float[,] referenceModel = {
     //   C    M    F    L
-        {0,   1.0f,0.0f,0}, // EnemyState.Corrupting
+        {0,   0.4f,0.0f,0.6f}, // EnemyState.Corrupting
         {0,   0.9f,0,   0.1f}, // EnemyState.Moving
-        {0.05f,0.5f,0.3f,  0.3f}, // EnemyState.Fleeing
+        {0.05f,0.55f,0.2f,0.2f}, // EnemyState.Fleeing
         {0.01f,0.99f,0, 0}  // EnemyState.Listening
     };
     float[,] actualModel = {
     //   C    M    F    L
-        {0,   0.5f,0.5f,0}, // EnemyState.Corrupting
+        {0,   0.4f,0.0f,0.6f}, // EnemyState.Corrupting
         {0,   0.9f,0,   0.1f}, // EnemyState.Moving
         {0.05f,0.5f,0.3f,  0.3f}, // EnemyState.Fleeing
         {0.01f,0.99f,0, 0}  // EnemyState.Listening
@@ -92,8 +92,8 @@ public class Enemy : MonoBehaviour
             activePercentage, 
             0, 1, 
             0, 1
-                -actualModel[(int)EnemyState.Corrupting, (int)EnemyState.Listening]
-                -actualModel[(int)EnemyState.Corrupting, (int)EnemyState.Corrupting]
+                -referenceModel[(int)EnemyState.Corrupting, (int)EnemyState.Listening]
+                -referenceModel[(int)EnemyState.Corrupting, (int)EnemyState.Corrupting]
         );
         actualModel[(int)EnemyState.Corrupting, (int)EnemyState.Moving] = 1-activePercentageCorrupting;
         actualModel[(int)EnemyState.Corrupting, (int)EnemyState.Fleeing] = activePercentageCorrupting;
@@ -102,8 +102,8 @@ public class Enemy : MonoBehaviour
             activePercentage, 
             0, 1, 
             0, 1
-                -actualModel[(int)EnemyState.Moving, (int)EnemyState.Listening]
-                -actualModel[(int)EnemyState.Moving, (int)EnemyState.Corrupting]
+                -referenceModel[(int)EnemyState.Moving, (int)EnemyState.Listening]
+                -referenceModel[(int)EnemyState.Moving, (int)EnemyState.Corrupting]
         );
         actualModel[(int)EnemyState.Moving, (int)EnemyState.Moving] = 1-activePercentageMoving;
         actualModel[(int)EnemyState.Moving, (int)EnemyState.Fleeing] = activePercentageMoving;
@@ -112,8 +112,8 @@ public class Enemy : MonoBehaviour
             activePercentage, 
             0, 1, 
             0, 1
-                -actualModel[(int)EnemyState.Fleeing, (int)EnemyState.Listening]
-                -actualModel[(int)EnemyState.Fleeing, (int)EnemyState.Corrupting]
+                -referenceModel[(int)EnemyState.Fleeing, (int)EnemyState.Listening]
+                -referenceModel[(int)EnemyState.Fleeing, (int)EnemyState.Corrupting]
         );
         actualModel[(int)EnemyState.Fleeing, (int)EnemyState.Moving] = 1-activePercentageFleeing;
         actualModel[(int)EnemyState.Fleeing, (int)EnemyState.Fleeing] = activePercentageFleeing;
@@ -122,8 +122,8 @@ public class Enemy : MonoBehaviour
             activePercentage, 
             0, 1, 
             0, 1
-                -actualModel[(int)EnemyState.Listening, (int)EnemyState.Listening]
-                -actualModel[(int)EnemyState.Listening, (int)EnemyState.Corrupting]
+                -referenceModel[(int)EnemyState.Listening, (int)EnemyState.Listening]
+                -referenceModel[(int)EnemyState.Listening, (int)EnemyState.Corrupting]
         );
         actualModel[(int)EnemyState.Listening, (int)EnemyState.Moving] = 1-activePercentageListening;
         actualModel[(int)EnemyState.Listening, (int)EnemyState.Fleeing] = activePercentageListening;
