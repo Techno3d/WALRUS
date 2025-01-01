@@ -32,6 +32,9 @@ public class Enemy : MonoBehaviour
     public float SightDistance = 15f;
     public float HearingDistance = 10f;
     public float MisHearingChance = 0.1f;
+    public float CaughtPenalty = -0.01f;
+    float eagerness = 0.2f;
+    bool appliedPenalty = false;
     PlayerStats[] statsArr = new PlayerStats[2];
 
     void Start()
@@ -62,10 +65,10 @@ public class Enemy : MonoBehaviour
                 break;
         }
 
+        UpdatePlayerStats(body1, statsArr[1]);
+        UpdatePlayerStats(body2, statsArr[2]);
         timeClock += Time.deltaTime;
         if(timeClock > actionTime) {
-            UpdatePlayerStats(body1, statsArr[1]);
-            UpdatePlayerStats(body2, statsArr[2]);
             updateActualModel();
             SwitchStates();
             timeClock = 0f;
@@ -73,8 +76,8 @@ public class Enemy : MonoBehaviour
     }
     
     void updateActualModel() {
-        float activePercentage = -1f;
-        if(statsArr[0].visibility != PlayerVisibility.NotVisible && statsArr[1].visibility != PlayerVisibility.NotVisible) {
+        float activePercentage;
+        if (statsArr[0].visibility != PlayerVisibility.NotVisible && statsArr[1].visibility != PlayerVisibility.NotVisible) {
             activePercentage = Mathf.Max(statsArr[0].PercentInactive, statsArr[1].PercentInactive);
         } else if(statsArr[0].visibility != PlayerVisibility.NotVisible) {
             activePercentage = statsArr[0].PercentInactive;
@@ -157,15 +160,22 @@ public class Enemy : MonoBehaviour
             } 
         }
         
-        if(stats.visibility == PlayerVisibility.NotVisible)
+        if(stats.visibility == PlayerVisibility.NotVisible) {
+            appliedPenalty = false;
             return;
+        }
         
         if(stats.visibility == PlayerVisibility.InSight) {
             //Always track when in sight
             stats.MovementDelta = Vector3.Distance(stats.oldPos, body.transform.position);
             stats.oldPos = body.transform.position;
-            if(stats.MovementDelta>0)
+            if(stats.MovementDelta>0) {
                 stats.PercentInactive = 1.00f;
+                if(!appliedPenalty && distance < HearingDistance) {
+                    eagerness -= CaughtPenalty;
+                    appliedPenalty = true;
+                }
+            }
         } else if(state == EnemyState.Listening && stats.visibility != PlayerVisibility.NotVisible) {
             bool failedHearing = stats.visibility == PlayerVisibility.CanHear && Random.Range(0f, 1f) < MisHearingChance;
             if(!failedHearing) {
@@ -173,10 +183,10 @@ public class Enemy : MonoBehaviour
                 stats.oldPos = body.transform.position;
                 if(stats.MovementDelta > 0) {
                     Debug.Log(stats.MovementDelta);
-                    stats.PercentInactive += 0.2f;
+                    stats.PercentInactive += eagerness;
                     stats.PercentInactive = Mathf.Clamp(stats.PercentInactive, 0f, 1f);
                 } else {
-                    stats.PercentInactive -= 0.2f;
+                    stats.PercentInactive -= eagerness;
                     stats.PercentInactive = Mathf.Clamp(stats.PercentInactive, 0f, 1f);
                 }
             } else {
