@@ -95,7 +95,10 @@ public class Enemy : MonoBehaviour
                 -referenceModel[(int)EnemyState.Corrupting, (int)EnemyState.Listening]
                 -referenceModel[(int)EnemyState.Corrupting, (int)EnemyState.Corrupting]
         );
-        actualModel[(int)EnemyState.Corrupting, (int)EnemyState.Moving] = 1-activePercentageCorrupting;
+        float max = 1
+                -referenceModel[(int)EnemyState.Corrupting, (int)EnemyState.Listening]
+                -referenceModel[(int)EnemyState.Corrupting, (int)EnemyState.Corrupting];
+        actualModel[(int)EnemyState.Corrupting, (int)EnemyState.Moving] = max-activePercentageCorrupting;
         actualModel[(int)EnemyState.Corrupting, (int)EnemyState.Fleeing] = activePercentageCorrupting;
 
         float activePercentageMoving = mapRange(
@@ -105,7 +108,10 @@ public class Enemy : MonoBehaviour
                 -referenceModel[(int)EnemyState.Moving, (int)EnemyState.Listening]
                 -referenceModel[(int)EnemyState.Moving, (int)EnemyState.Corrupting]
         );
-        actualModel[(int)EnemyState.Moving, (int)EnemyState.Moving] = 1-activePercentageMoving;
+        max = 1
+                -referenceModel[(int)EnemyState.Moving, (int)EnemyState.Listening]
+                -referenceModel[(int)EnemyState.Moving, (int)EnemyState.Corrupting];
+        actualModel[(int)EnemyState.Moving, (int)EnemyState.Moving] = max-activePercentageMoving;
         actualModel[(int)EnemyState.Moving, (int)EnemyState.Fleeing] = activePercentageMoving;
 
         float activePercentageFleeing = mapRange(
@@ -115,7 +121,10 @@ public class Enemy : MonoBehaviour
                 -referenceModel[(int)EnemyState.Fleeing, (int)EnemyState.Listening]
                 -referenceModel[(int)EnemyState.Fleeing, (int)EnemyState.Corrupting]
         );
-        actualModel[(int)EnemyState.Fleeing, (int)EnemyState.Moving] = 1-activePercentageFleeing;
+        max = 1
+                -referenceModel[(int)EnemyState.Fleeing, (int)EnemyState.Listening]
+                -referenceModel[(int)EnemyState.Fleeing, (int)EnemyState.Corrupting];
+        actualModel[(int)EnemyState.Fleeing, (int)EnemyState.Moving] = max-activePercentageFleeing;
         actualModel[(int)EnemyState.Fleeing, (int)EnemyState.Fleeing] = activePercentageFleeing;
 
         float activePercentageListening = mapRange(
@@ -125,7 +134,10 @@ public class Enemy : MonoBehaviour
                 -referenceModel[(int)EnemyState.Listening, (int)EnemyState.Listening]
                 -referenceModel[(int)EnemyState.Listening, (int)EnemyState.Corrupting]
         );
-        actualModel[(int)EnemyState.Listening, (int)EnemyState.Moving] = 1-activePercentageListening;
+        max = 1
+                -referenceModel[(int)EnemyState.Listening, (int)EnemyState.Listening]
+                -referenceModel[(int)EnemyState.Listening, (int)EnemyState.Corrupting];
+        actualModel[(int)EnemyState.Listening, (int)EnemyState.Moving] = max-activePercentageListening;
         actualModel[(int)EnemyState.Listening, (int)EnemyState.Fleeing] = activePercentageListening;
     }
 
