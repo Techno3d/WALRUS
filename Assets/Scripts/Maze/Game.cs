@@ -14,6 +14,11 @@ public class Game : MonoBehaviour
 	[SerializeField]
 	int2 mazeSize = int2(20, 20);
 
+	[SerializeField]
+	float pickLastProbability = 0.5f;
+	[SerializeField]
+	float openDeadEndProbability = 0.5f;
+
 	[SerializeField, Tooltip("Use zero for random seed.")]
 	int seed;
 
@@ -25,7 +30,9 @@ public class Game : MonoBehaviour
 		new GenerateMazeJob
 		{
 			maze = maze,
-			seed = seed != 0 ? seed : Random.Range(1, int.MaxValue)
+			seed = seed != 0 ? seed : Random.Range(1, int.MaxValue),
+			pickLastProbability = pickLastProbability,
+			openDeadEndProbability = openDeadEndProbability
 		}.Schedule().Complete();
 		visualization.Visualize(maze);
 	}

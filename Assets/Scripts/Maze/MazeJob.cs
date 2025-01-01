@@ -11,6 +11,8 @@ public struct GenerateMazeJob : IJob
 
 	public int seed;
 
+	public float pickLastProbability, openDeadEndProbability;
+
 	public void Execute ()
 	{
 		var random = new Random((uint)seed);
@@ -41,6 +43,11 @@ public struct GenerateMazeJob : IJob
 				maze[passage.Item1] = passage.Item3;
 				activeIndices[++lastActiveIndex] = passage.Item1;
 			}
+		}
+
+		if (openDeadEndProbability > 0f)
+		{
+			random = OpenDeadEnds(random, scratchpad);
 		}
 	}
 	
@@ -83,5 +90,49 @@ public struct GenerateMazeJob : IJob
 			}
 		}
 		return count;
+	}
+
+	int FindClosedPassages (
+		int index, NativeArray<(int, MazeFlags, MazeFlags)> scratchpad, MazeFlags exclude
+	)
+	{
+		int2 coordinates = maze.IndexToCoordinates(index);
+		int count = 0;
+		if (exclude != MazeFlags.PassageE && coordinates.x + 1 < maze.SizeEW)
+		{
+			scratchpad[count++] = (maze.StepE, MazeFlags.PassageE, MazeFlags.PassageW);
+		}
+		if (exclude != MazeFlags.PassageW && coordinates.x > 0)
+		{
+			scratchpad[count++] = (maze.StepW, MazeFlags.PassageW, MazeFlags.PassageE);
+		}
+		if (exclude != MazeFlags.PassageN && coordinates.y + 1 < maze.SizeNS)
+		{
+			scratchpad[count++] = (maze.StepN, MazeFlags.PassageN, MazeFlags.PassageS);
+		}
+		if (exclude != MazeFlags.PassageS && coordinates.y > 0)
+		{
+			scratchpad[count++] = (maze.StepS, MazeFlags.PassageS, MazeFlags.PassageN);
+		}
+		return count;
+	}
+
+	Random OpenDeadEnds (
+		Random random, NativeArray<(int, MazeFlags, MazeFlags)> scratchpad
+	)
+	{
+		for (int i = 0; i < maze.Length; i++)
+		{
+			MazeFlags cell = maze[i];
+			if (cell.HasExactlyOne() && random.NextFloat() < openDeadEndProbability)
+			{
+				int availablePassageCount = FindClosedPassages(i, scratchpad, cell);
+				(int, MazeFlags, MazeFlags) passage =
+					scratchpad[random.NextInt(0, availablePassageCount)];
+				maze[i] = cell.With(passage.Item2);
+				maze.Set(i + passage.Item1, passage.Item3);
+			}
+		}
+		return random;
 	}
 }
