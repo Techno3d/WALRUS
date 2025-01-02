@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -11,14 +12,14 @@ public class Enemy : MonoBehaviour
     float[,] referenceModel = {
     //   C    M    F    L
         {0,   0.4f,0.0f,0.6f}, // EnemyState.Corrupting
-        {0,   0.9f,0,   0.1f}, // EnemyState.Moving
+        {0,   0.1f,0,   0.9f}, // EnemyState.Moving
         {0.05f,0.55f,0.2f,0.2f}, // EnemyState.Fleeing
         {0.01f,0.99f,0, 0}  // EnemyState.Listening
     };
     float[,] actualModel = {
     //   C    M    F    L
         {0,   0.4f,0.0f,0.6f}, // EnemyState.Corrupting
-        {0,   0.9f,0,   0.1f}, // EnemyState.Moving
+        {0,   0.1f,0,   0.9f}, // EnemyState.Moving
         {0.05f,0.5f,0.3f,  0.3f}, // EnemyState.Fleeing
         {0.01f,0.99f,0, 0}  // EnemyState.Listening
     };
@@ -35,7 +36,8 @@ public class Enemy : MonoBehaviour
     public float CaughtPenalty = -0.01f;
     float eagerness = 0.2f;
     bool appliedPenalty = false;
-    PlayerStats[] statsArr = new PlayerStats[2];
+    PlayerStats stats1 = new PlayerStats();
+    PlayerStats stats2 = new PlayerStats();
 
     void Start()
     {
@@ -65,24 +67,25 @@ public class Enemy : MonoBehaviour
                 break;
         }
 
-        UpdatePlayerStats(body1, statsArr[1]);
-        UpdatePlayerStats(body2, statsArr[2]);
+        // UpdatePlayerStats(body1, ref stats1);
+        UpdatePlayerStats(body2, ref stats2);
         timeClock += Time.deltaTime;
         if(timeClock > actionTime) {
             updateActualModel();
             SwitchStates();
+            // Debug.Log(state);
             timeClock = 0f;
         }
     }
     
     void updateActualModel() {
         float activePercentage;
-        if (statsArr[0].visibility != PlayerVisibility.NotVisible && statsArr[1].visibility != PlayerVisibility.NotVisible) {
-            activePercentage = Mathf.Max(statsArr[0].PercentInactive, statsArr[1].PercentInactive);
-        } else if(statsArr[0].visibility != PlayerVisibility.NotVisible) {
-            activePercentage = statsArr[0].PercentInactive;
-        } else if(statsArr[1].visibility != PlayerVisibility.NotVisible) {
-            activePercentage = statsArr[1].PercentInactive;
+        if (stats1.visibility != PlayerVisibility.NotVisible && stats2.visibility != PlayerVisibility.NotVisible) {
+            activePercentage = Mathf.Max(stats1.PercentInactive, stats2.PercentInactive);
+        } else if(stats1.visibility != PlayerVisibility.NotVisible) {
+            activePercentage = stats1.PercentInactive;
+        } else if(stats2.visibility != PlayerVisibility.NotVisible) {
+            activePercentage = stats2.PercentInactive;
         } else {
             actualModel = referenceModel;
             return;
@@ -139,6 +142,19 @@ public class Enemy : MonoBehaviour
                 -referenceModel[(int)EnemyState.Listening, (int)EnemyState.Corrupting];
         actualModel[(int)EnemyState.Listening, (int)EnemyState.Moving] = max-activePercentageListening;
         actualModel[(int)EnemyState.Listening, (int)EnemyState.Fleeing] = activePercentageListening;
+        debugPrint2DArr(actualModel);
+    }
+    
+    void debugPrint2DArr(float[,] arr) {
+        String s = "";
+        for(int i = 0; i < arr.GetLength(0); i++) {
+            String a = "";
+            for(int j = 0; j < arr.GetLength(1); j++) {
+                a += " " + arr[i,j];
+            }
+            s += a + "\n";
+        }
+        Debug.Log(s);
     }
 
     float mapRange(float x, float in_min, float in_max, float out_min, float out_max)
@@ -149,16 +165,18 @@ public class Enemy : MonoBehaviour
     // I think this is it
     void SwitchStates() {
         float maxPercent = -1;
+        int currentState = (int)state;
         for(int i = 0; i < 4; i++) {
-            float percentCompare = actualModel[(int)state,i];
+            float percentCompare = actualModel[currentState,i];
             if(percentCompare>maxPercent) {
                 maxPercent = percentCompare;
                 state = (EnemyState)i;
             }
+            // Debug.Log(percentCompare + " " + (EnemyState)i + " " + (EnemyState)currentState);
         }
     }
 
-    void UpdatePlayerStats(GameObject body, PlayerStats stats) {
+    void UpdatePlayerStats(GameObject body, ref PlayerStats stats) {
         float distance = Vector3.Distance(body.transform.position, transform.position);
 
         if(distance < HearingDistance)
@@ -167,10 +185,12 @@ public class Enemy : MonoBehaviour
             stats.visibility = PlayerVisibility.NotVisible;
 
         if(distance < SightDistance) {
-            if(!Physics.Raycast(transform.position, (body.transform.position-transform.position).normalized, SightDistance)) {
+            RaycastHit hit;
+            if(Physics.Raycast(transform.position, (body.transform.position-transform.position).normalized, out hit, SightDistance) && hit.collider.CompareTag("PlayerBody")) {
                 stats.visibility = PlayerVisibility.InSight;
             } 
         }
+        // Debug.Log(stats.visibility);
         
         if(stats.visibility == PlayerVisibility.NotVisible) {
             appliedPenalty = false;
@@ -187,6 +207,9 @@ public class Enemy : MonoBehaviour
                     eagerness -= CaughtPenalty;
                     appliedPenalty = true;
                 }
+            } else {
+                stats.PercentInactive -= eagerness*Time.deltaTime/10f;
+                stats.PercentInactive = Mathf.Clamp(stats.PercentInactive, 0f, 1f);
             }
         } else if(state == EnemyState.Listening && stats.visibility != PlayerVisibility.NotVisible) {
             bool failedHearing = stats.visibility == PlayerVisibility.CanHear && Random.Range(0f, 1f) < MisHearingChance;
@@ -194,18 +217,17 @@ public class Enemy : MonoBehaviour
                 stats.MovementDelta = Vector3.Distance(stats.oldPos, body.transform.position);
                 stats.oldPos = body.transform.position;
                 if(stats.MovementDelta > 0) {
-                    Debug.Log(stats.MovementDelta);
-                    stats.PercentInactive += eagerness;
+                    stats.PercentInactive += eagerness*Time.deltaTime;
                     stats.PercentInactive = Mathf.Clamp(stats.PercentInactive, 0f, 1f);
                 } else {
-                    stats.PercentInactive -= eagerness;
+                    stats.PercentInactive -= eagerness*Time.deltaTime;
                     stats.PercentInactive = Mathf.Clamp(stats.PercentInactive, 0f, 1f);
                 }
+                Debug.Log(stats.MovementDelta);
             } else {
                 stats.MovementDelta = 0;
             }
         }
-
     }
 }
 
