@@ -29,7 +29,8 @@ public class Enemy : MonoBehaviour
     public float actionTime = 1f;
     // This code controls if the AI thinks a player is active/inactive
     [Header("Player Detection")]
-    public GameObject body1, body2;
+    public GameObject body1;
+    public GameObject body2;
     public float SightDistance = 15f;
     public float HearingDistance = 10f;
     public float MisHearingChance = 0.1f;
@@ -73,7 +74,6 @@ public class Enemy : MonoBehaviour
         if(timeClock > actionTime) {
             updateActualModel();
             SwitchStates();
-            // Debug.Log(state);
             timeClock = 0f;
         }
     }
@@ -142,10 +142,10 @@ public class Enemy : MonoBehaviour
                 -referenceModel[(int)EnemyState.Listening, (int)EnemyState.Corrupting];
         actualModel[(int)EnemyState.Listening, (int)EnemyState.Moving] = max-activePercentageListening;
         actualModel[(int)EnemyState.Listening, (int)EnemyState.Fleeing] = activePercentageListening;
-        debugPrint2DArr(actualModel);
+        // debugPrint2DArr(actualModel);
     }
     
-    void debugPrint2DArr(float[,] arr) {
+    void DebugPrint2DArr(float[,] arr) {
         String s = "";
         for(int i = 0; i < arr.GetLength(0); i++) {
             String a = "";
@@ -172,7 +172,6 @@ public class Enemy : MonoBehaviour
                 maxPercent = percentCompare;
                 state = (EnemyState)i;
             }
-            // Debug.Log(percentCompare + " " + (EnemyState)i + " " + (EnemyState)currentState);
         }
     }
 
@@ -190,7 +189,6 @@ public class Enemy : MonoBehaviour
                 stats.visibility = PlayerVisibility.InSight;
             } 
         }
-        // Debug.Log(stats.visibility);
         
         if(stats.visibility == PlayerVisibility.NotVisible) {
             appliedPenalty = false;
@@ -223,7 +221,6 @@ public class Enemy : MonoBehaviour
                     stats.PercentInactive -= eagerness*Time.deltaTime;
                     stats.PercentInactive = Mathf.Clamp(stats.PercentInactive, 0f, 1f);
                 }
-                Debug.Log(stats.MovementDelta);
             } else {
                 stats.MovementDelta = 0;
             }
