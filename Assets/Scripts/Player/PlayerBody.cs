@@ -82,6 +82,11 @@ public class PlayerBody : MonoBehaviour
         if(Physics.Raycast(transform.position, transform.forward, out hit, BeamRange)) {
             beam.transform.localScale = new Vector3(1, 1, hit.distance);
             beam.transform.localRotation = Quaternion.Euler(cam.transform.localEulerAngles.x, Mathf.Atan2(hit.distance, 0.7f)*Mathf.Rad2Deg-90, 0);
+            if(hit.collider.CompareTag("Enemy")) {
+                hit.collider.GetComponent<EnemyHealth>().TakeDamage(3*Time.deltaTime);
+            } else if(hit.collider.CompareTag("CorruptionCube")) {
+                hit.collider.GetComponent<CorruptionHealth>().TakeDamage(3*Time.deltaTime);
+            }
         } else {
             beam.transform.localScale = new Vector3(1, 1, BeamRange);
             beam.transform.localRotation = Quaternion.Euler(cam.transform.localEulerAngles.x, Mathf.Atan2(BeamRange, 0.7f)*Mathf.Rad2Deg-90, 0);

@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour
 {
+    [SerializeField]
     float health;
     // Used when damage was taken
     // public static event Action<float> HealthChanged;
