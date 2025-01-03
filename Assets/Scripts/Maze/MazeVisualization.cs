@@ -25,6 +25,7 @@ public class MazeVisualization : ScriptableObject
 				maze.IndexToWorldPosition(i), rotations[prefabWithRotation.Item2]
 			);
 		}
+		
 	}
 
 	(MazeCellObject, int) GetPrefab (MazeFlags flags) => flags switch

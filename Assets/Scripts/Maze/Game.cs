@@ -5,6 +5,7 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 using static Unity.Mathematics.math;
+using Unity.AI.Navigation;
 
 public class Game : MonoBehaviour
 {
@@ -35,7 +36,8 @@ public class Game : MonoBehaviour
 			openDeadEndProbability = openDeadEndProbability
 		}.Schedule().Complete();
 		visualization.Visualize(maze);
-	}
+        GetComponent<NavMeshSurface>().BuildNavMesh();
+    }
 
 	void OnDestroy ()
 	{
