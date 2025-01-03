@@ -180,6 +180,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4902578174322946313}
   - component: {fileID: 7141892450415097042}
+  - component: {fileID: 1706925526269069808}
   m_Layer: 0
   m_Name: Maze_Hallway
   m_TagString: Untagged
@@ -218,6 +219,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c230cd5d613743d01b1b60058b1dc589, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!205 &1706925526269069808
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7559650603871827366}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0.0000015497208, y: 1.5000004, z: 0.0000019073486}
+  m_Size: 6.0000105
+  m_FadeMode: 1
+  m_AnimateCrossFading: 1
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.15487705
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 8645828662000934102}
+    - renderer: {fileID: 7838847538917506190}
+    - renderer: {fileID: 1447042775378071505}
+    - renderer: {fileID: 7990927839443966356}
+  m_Enabled: 1
 --- !u!1 &7990927839445656250
 GameObject:
   m_ObjectHideFlags: 0

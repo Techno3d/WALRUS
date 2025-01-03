@@ -12,6 +12,7 @@ public class MainPlayer : MonoBehaviour
     private bool isFirstActive = true;
     private GameControls controls;
     public static event Action SwitchedBody;
+    public PlayerBody ActiveBody => isFirstActive ? FirstBody : SecondBody;
 
     void Awake() {
         controls = new GameControls();
@@ -34,6 +35,7 @@ public class MainPlayer : MonoBehaviour
     void SwitchBody(bool isFirstCamActive) {
         FirstBody.enabled = isFirstCamActive;
         SecondBody.enabled = !isFirstCamActive;
+        SwitchedBody?.Invoke();
     }
 
     void Update()

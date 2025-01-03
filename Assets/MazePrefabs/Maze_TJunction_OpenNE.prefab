@@ -52,7 +52,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 3283086416854503965, guid: cc9ed6323ca588343a4b49bce6abf299, type: 3}
+      propertyPath: m_LODs.Array.data[2].screenRelativeHeight
+      value: 0.14590763
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 3283086416854503965, guid: cc9ed6323ca588343a4b49bce6abf299, type: 3}
     m_RemovedGameObjects:
     - {fileID: 6677163668642916036, guid: cc9ed6323ca588343a4b49bce6abf299, type: 3}
     m_AddedGameObjects: []
