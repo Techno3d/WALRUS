@@ -103,7 +103,6 @@ public class Enemy : MonoBehaviour
         roundedPos.x = Mathf.Round(roundedPos.x);
         roundedPos.y = Mathf.Round(roundedPos.y);
         roundedPos *= 3;
-        Debug.Log(roundedPos);
         
         Vector2 spawnPos = roundedPos + dir;
         Instantiate(corruptionCube, new Vector3(spawnPos.x, 0.5f, spawnPos.y), Quaternion.identity);
@@ -180,7 +179,6 @@ public class Enemy : MonoBehaviour
                 -referenceModel[(int)EnemyState.Listening, (int)EnemyState.Corrupting];
         actualModel[(int)EnemyState.Listening, (int)EnemyState.Moving] = max-activePercentageListening;
         actualModel[(int)EnemyState.Listening, (int)EnemyState.Fleeing] = activePercentageListening;
-        // debugPrint2DArr(actualModel);
     }
     
     // For Debugging purposes
@@ -218,14 +216,16 @@ public class Enemy : MonoBehaviour
         // This means that if moving and fleeing are both 30% chance, the range should have a 30% chance of giving a value between 0 to .3 and a 30% chance from .3 to .6
         // At least in theory.
         float randGen = Random.Range(0.00f, 1.00f);
+        Debug.Log(randGen);
+        DebugPrint2DArr(actualModel);
         EnemyState newState = EnemyState.Corrupting;
-        if(randGen > actualModel[(int)state,(int)EnemyState.Corrupting]) {
+        if(randGen >= actualModel[(int)state,(int)EnemyState.Corrupting]) {
             newState = EnemyState.Moving;
         }
-        if(randGen > actualModel[(int)state,(int)EnemyState.Corrupting] + actualModel[(int)state,(int)EnemyState.Moving]) {
+        if(randGen >= actualModel[(int)state,(int)EnemyState.Corrupting] + actualModel[(int)state,(int)EnemyState.Moving]) {
             newState = EnemyState.Fleeing;
         }
-        if(randGen > actualModel[(int)state,(int)EnemyState.Corrupting] + actualModel[(int)state,(int)EnemyState.Moving] + actualModel[(int)state,(int)EnemyState.Fleeing]) {
+        if(randGen >= actualModel[(int)state,(int)EnemyState.Corrupting] + actualModel[(int)state,(int)EnemyState.Moving] + actualModel[(int)state,(int)EnemyState.Fleeing]) {
             newState = EnemyState.Listening;
         }
         state = newState;
@@ -263,7 +263,6 @@ public class Enemy : MonoBehaviour
                 if(!appliedPenalty && distance < HearingDistance) {
                     eagerness -= CaughtPenalty;
                     appliedPenalty = true;
-                    timeClock = actionTime + 1;
                 }
             } else {
                 // Decays over time
