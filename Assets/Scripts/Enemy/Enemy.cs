@@ -6,6 +6,7 @@ using Random = UnityEngine.Random;
 
 public class Enemy : MonoBehaviour
 {
+    public GameObject corruptionCube;
     EnemyState state = EnemyState.Moving;
     // This is kind of a markov model
     // Essentially, using the player stats array, I will change this matrix. Not really a POMDP or an HMM
@@ -16,13 +17,7 @@ public class Enemy : MonoBehaviour
         {0.05f,0.55f,0.2f,0.2f}, // EnemyState.Fleeing
         {0.01f,0.99f,0, 0}  // EnemyState.Listening
     };
-    float[,] actualModel = {
-    //   C    M    F    L
-        {0,   0.4f,0.0f,0.6f}, // EnemyState.Corrupting
-        {0,   0.1f,0,   0.9f}, // EnemyState.Moving
-        {0.05f,0.5f,0.3f,  0.3f}, // EnemyState.Fleeing
-        {0.01f,0.99f,0, 0}  // EnemyState.Listening
-    };
+    float[,] actualModel;
     float timeClock = 0f;
 
     [Tooltip("This controls how long the AI has to do an action before switching")]
@@ -42,13 +37,15 @@ public class Enemy : MonoBehaviour
 
     void Start()
     {
+        actualModel = referenceModel;
     }
 
     void Update()
     {
         switch (state) {
             case EnemyState.Corrupting:
-                // Corrupt tile code
+                CorruptTile();
+                timeClock = actionTime+1;
                 break;
 
             case EnemyState.Fleeing:
@@ -68,7 +65,7 @@ public class Enemy : MonoBehaviour
                 break;
         }
 
-        // UpdatePlayerStats(body1, ref stats1);
+        UpdatePlayerStats(body1, ref stats1);
         UpdatePlayerStats(body2, ref stats2);
         timeClock += Time.deltaTime;
         if(timeClock > actionTime) {
@@ -76,6 +73,34 @@ public class Enemy : MonoBehaviour
             SwitchStates();
             timeClock = 0f;
         }
+    }
+    
+    void CorruptTile() {
+        GameObject activeBody;
+        if(stats1.PercentInactive > stats2.PercentInactive) {
+            activeBody = body1;
+        } else {
+            activeBody = body2;
+        }
+        // Direction to go in
+        Vector2 dir = new Vector2((activeBody.transform.position - transform.position).x, (activeBody.transform.position - transform.position).z);
+        dir.Normalize();
+        dir.x = Mathf.Round(dir.x);
+        dir.y = Mathf.Round(dir.y);
+        dir *= 6;
+        
+        //Where AI is, but centered on tile
+        Vector2 roundedPos = new Vector2(transform.position.x-3, transform.position.z-3);
+        roundedPos /= 3;
+        roundedPos.x = Mathf.Round(roundedPos.x);
+        roundedPos.y = Mathf.Round(roundedPos.y);
+        roundedPos *= 3;
+        Debug.Log(roundedPos);
+        
+        Vector2 spawnPos = roundedPos + dir;
+        Instantiate(corruptionCube, new Vector3(spawnPos.x, 0, spawnPos.y), Quaternion.identity);
+        stats1.PercentInactive = Mathf.Clamp(stats1.PercentInactive-0.4f, 0, 1);
+        stats2.PercentInactive = Mathf.Clamp(stats2.PercentInactive-0.4f, 0, 1);
     }
     
     void updateActualModel() {
@@ -164,15 +189,27 @@ public class Enemy : MonoBehaviour
     
     // I think this is it
     void SwitchStates() {
-        float maxPercent = -1;
-        int currentState = (int)state;
-        for(int i = 0; i < 4; i++) {
-            float percentCompare = actualModel[currentState,i];
-            if(percentCompare>maxPercent) {
-                maxPercent = percentCompare;
-                state = (EnemyState)i;
-            }
+        // float maxPercent = -1;
+        // int currentState = (int)state;
+        // for(int i = 0; i < 4; i++) {
+        //     float percentCompare = actualModel[currentState,i];
+        //     if(percentCompare>maxPercent) {
+        //         maxPercent = percentCompare;
+        //         state = (EnemyState)i;
+        //     }
+        // }
+        float randGen = Random.Range(0.00f, 1.00f);
+        EnemyState newState = EnemyState.Corrupting;
+        if(randGen > actualModel[(int)state,(int)EnemyState.Corrupting]) {
+            newState = EnemyState.Moving;
         }
+        if(randGen > actualModel[(int)state,(int)EnemyState.Corrupting] + actualModel[(int)state,(int)EnemyState.Moving]) {
+            newState = EnemyState.Fleeing;
+        }
+        if(randGen > actualModel[(int)state,(int)EnemyState.Corrupting] + actualModel[(int)state,(int)EnemyState.Moving] + actualModel[(int)state,(int)EnemyState.Fleeing]) {
+            newState = EnemyState.Listening;
+        }
+        state = newState;
     }
 
     void UpdatePlayerStats(GameObject body, ref PlayerStats stats) {
