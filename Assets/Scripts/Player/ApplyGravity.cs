@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// This is so you don't float if you switch bodies
 public class ApplyGravity : MonoBehaviour
 {
     public float gravity = 9.81f;

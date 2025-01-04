@@ -20,8 +20,15 @@ public class Enemy : MonoBehaviour
     float[,] actualModel;
     float timeClock = 0f;
 
-    [Tooltip("This controls how long the AI has to do an action before switching")]
-    public float actionTime = 1f;
+    // [Tooltip("This controls how long the AI has to do an action before switching")]
+    float actionTime => state switch
+    {
+        EnemyState.Corrupting => 0.5f,
+        EnemyState.Moving => 2f,
+        EnemyState.Fleeing => 2f,
+        EnemyState.Listening => 0.5f,
+        _ => 1f,
+    };
     // This code controls if the AI thinks a player is active/inactive
     [Header("Player Detection")]
     public GameObject body1;
@@ -65,6 +72,7 @@ public class Enemy : MonoBehaviour
                 break;
         }
 
+        // Update the stats
         UpdatePlayerStats(body1, ref stats1);
         UpdatePlayerStats(body2, ref stats2);
         timeClock += Time.deltaTime;
@@ -98,13 +106,15 @@ public class Enemy : MonoBehaviour
         Debug.Log(roundedPos);
         
         Vector2 spawnPos = roundedPos + dir;
-        Instantiate(corruptionCube, new Vector3(spawnPos.x, 0, spawnPos.y), Quaternion.identity);
+        Instantiate(corruptionCube, new Vector3(spawnPos.x, 0.5f, spawnPos.y), Quaternion.identity);
         stats1.PercentInactive = Mathf.Clamp(stats1.PercentInactive-0.4f, 0, 1);
         stats2.PercentInactive = Mathf.Clamp(stats2.PercentInactive-0.4f, 0, 1);
     }
     
+    // This code updates the model based on the observation
     void updateActualModel() {
         float activePercentage;
+        // Does the AI even see/hear the player?
         if (stats1.visibility != PlayerVisibility.NotVisible && stats2.visibility != PlayerVisibility.NotVisible) {
             activePercentage = Mathf.Max(stats1.PercentInactive, stats2.PercentInactive);
         } else if(stats1.visibility != PlayerVisibility.NotVisible) {
@@ -112,10 +122,13 @@ public class Enemy : MonoBehaviour
         } else if(stats2.visibility != PlayerVisibility.NotVisible) {
             activePercentage = stats2.PercentInactive;
         } else {
+            // Could be cool to slowly make reference model into actual, but this should still work
             actualModel = referenceModel;
             return;
         }
 
+        // The rest of this code just makes sure the percentages add up to 100%, else we have problems
+        // The map function makes sure that the movement/fleeing percent will add up
         float activePercentageCorrupting = mapRange(
             activePercentage, 
             0, 1, 
@@ -170,6 +183,7 @@ public class Enemy : MonoBehaviour
         // debugPrint2DArr(actualModel);
     }
     
+    // For Debugging purposes
     void DebugPrint2DArr(float[,] arr) {
         String s = "";
         for(int i = 0; i < arr.GetLength(0); i++) {
@@ -198,6 +212,11 @@ public class Enemy : MonoBehaviour
         //         state = (EnemyState)i;
         //     }
         // }
+        
+        // Essentially, the AI might chose to do something rare, like corrupting, sometimes, especially if it isn't sure.
+        // This works I think, becuase random.range should have equal chance of giving a value in the range.
+        // This means that if moving and fleeing are both 30% chance, the range should have a 30% chance of giving a value between 0 to .3 and a 30% chance from .3 to .6
+        // At least in theory.
         float randGen = Random.Range(0.00f, 1.00f);
         EnemyState newState = EnemyState.Corrupting;
         if(randGen > actualModel[(int)state,(int)EnemyState.Corrupting]) {
@@ -215,11 +234,13 @@ public class Enemy : MonoBehaviour
     void UpdatePlayerStats(GameObject body, ref PlayerStats stats) {
         float distance = Vector3.Distance(body.transform.position, transform.position);
 
+        // Can you hear?
         if(distance < HearingDistance)
             stats.visibility = PlayerVisibility.CanHear;
         else 
             stats.visibility = PlayerVisibility.NotVisible;
 
+        // Can you see?
         if(distance < SightDistance) {
             RaycastHit hit;
             if(Physics.Raycast(transform.position, (body.transform.position-transform.position).normalized, out hit, SightDistance) && hit.collider.CompareTag("PlayerBody")) {
@@ -228,6 +249,7 @@ public class Enemy : MonoBehaviour
         }
         
         if(stats.visibility == PlayerVisibility.NotVisible) {
+            // This is so the penalty for being caught isn't applied every frame
             appliedPenalty = false;
             return;
         }
@@ -241,8 +263,10 @@ public class Enemy : MonoBehaviour
                 if(!appliedPenalty && distance < HearingDistance) {
                     eagerness -= CaughtPenalty;
                     appliedPenalty = true;
+                    timeClock = actionTime + 1;
                 }
             } else {
+                // Decays over time
                 stats.PercentInactive -= eagerness*Time.deltaTime/10f;
                 stats.PercentInactive = Mathf.Clamp(stats.PercentInactive, 0f, 1f);
             }
