@@ -6,7 +6,6 @@ using Random = UnityEngine.Random;
 
 public class Enemy : MonoBehaviour
 {
-    public GameObject corruptionCube;
     EnemyState state = EnemyState.Moving;
     // This is kind of a markov model
     // Essentially, using the player stats array, I will change this matrix. Not really a POMDP or an HMM
@@ -19,16 +18,21 @@ public class Enemy : MonoBehaviour
     };
     float[,] actualModel;
     float timeClock = 0f;
+    Vector3 target = Vector3.zero;
 
+    [Header("Attacks")]
+    public GameObject corruptionCube;
+    public float corruptionTime = 0.5f, movingTime = 2f, fleeingTime = 2f, listeningTime = 0.5f;
     // [Tooltip("This controls how long the AI has to do an action before switching")]
     float actionTime => state switch
     {
-        EnemyState.Corrupting => 0.5f,
-        EnemyState.Moving => 2f,
-        EnemyState.Fleeing => 2f,
-        EnemyState.Listening => 0.5f,
+        EnemyState.Corrupting => corruptionTime,
+        EnemyState.Moving => movingTime,
+        EnemyState.Fleeing => fleeingTime,
+        EnemyState.Listening => listeningTime,
         _ => 1f,
     };
+
     // This code controls if the AI thinks a player is active/inactive
     [Header("Player Detection")]
     public GameObject body1;
@@ -45,6 +49,7 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         actualModel = referenceModel;
+        target = transform.position;
     }
 
     void Update()
@@ -56,15 +61,15 @@ public class Enemy : MonoBehaviour
                 break;
 
             case EnemyState.Fleeing:
-                // Run away code
+                Flee();
                 break;
 
             case EnemyState.Listening:
-                // Listening code
+                Listen();
                 break;
 
             case EnemyState.Moving:
-                // Movement code
+                Move();
                 break;
 
             default:
@@ -81,6 +86,46 @@ public class Enemy : MonoBehaviour
             SwitchStates();
             timeClock = 0f;
         }
+    }
+    
+    void Move() {
+        //Where AI is, but centered on tile
+        Vector3 roundedPos = new Vector3(transform.position.x-3, transform.position.y, transform.position.z-3);
+        roundedPos /= 3;
+        roundedPos.x = Mathf.Round(roundedPos.x);
+        roundedPos.z = Mathf.Round(roundedPos.z);
+        roundedPos *= 3;
+        
+        Vector3 direction = Vector3.one - Vector3.up;
+        direction *= 3;
+        target = roundedPos + direction;
+    }
+    
+    void Flee() {
+        GameObject activeBody;
+        if(stats1.PercentInactive > stats2.PercentInactive) {
+            activeBody = body1;
+        } else {
+            activeBody = body2;
+        }
+
+        Vector3 roundedPos = new Vector3(transform.position.x-3, transform.position.y, transform.position.z-3);
+        roundedPos /= 3;
+        roundedPos.x = Mathf.Round(roundedPos.x);
+        roundedPos.z = Mathf.Round(roundedPos.z);
+        roundedPos *= 3;
+        
+        Vector2 dir = new Vector2((transform.position - activeBody.transform.position).x, (transform.position - activeBody.transform.position).z);
+        dir.Normalize();
+        dir.x = Mathf.Round(dir.x);
+        dir.y = Mathf.Round(dir.y);
+        dir *= 6;
+        
+        target = roundedPos + new Vector3(dir.x, 0, dir.y);
+    }
+    
+    void Listen() {
+        // Idk if we need anything here
     }
     
     void CorruptTile() {
