@@ -6,6 +6,7 @@ using Random = UnityEngine.Random;
 
 public class Enemy : MonoBehaviour
 {
+    public static float NumEnemies = 0;
     EnemyState state = EnemyState.Moving;
     // This is kind of a markov model
     // Essentially, using the player stats array, I will change this matrix. Not really a POMDP or an HMM
@@ -50,26 +51,22 @@ public class Enemy : MonoBehaviour
     {
         actualModel = referenceModel;
         target = transform.position;
+        NumEnemies++;
     }
 
     void Update()
     {
         switch (state) {
             case EnemyState.Corrupting:
-                CorruptTile();
-                timeClock = actionTime+1;
                 break;
 
             case EnemyState.Fleeing:
-                Flee();
                 break;
 
             case EnemyState.Listening:
-                Listen();
                 break;
 
             case EnemyState.Moving:
-                Move();
                 break;
 
             default:
@@ -84,6 +81,28 @@ public class Enemy : MonoBehaviour
         if(timeClock > actionTime) {
             updateActualModel();
             SwitchStates();
+
+            // This state switch is for things that happen on a switch
+            switch (state) {
+                case EnemyState.Corrupting:
+                    CorruptTile();
+                    break;
+
+                case EnemyState.Fleeing:
+                    Flee();
+                    break;
+
+                case EnemyState.Listening:
+                    break;
+
+                case EnemyState.Moving:
+                    Move();
+                    break;
+
+                default:
+                    Debug.LogError("How");
+                    break;
+            }
             timeClock = 0f;
         }
     }
@@ -98,7 +117,10 @@ public class Enemy : MonoBehaviour
         
         Vector3 direction = Vector3.one - Vector3.up;
         direction *= 3;
-        target = roundedPos + direction;
+        Vector3 newTarget = roundedPos + direction;
+        newTarget.x = Mathf.Clamp(newTarget.x, 0, 144);
+        newTarget.z = Mathf.Clamp(newTarget.z, 0, 144);
+        target = newTarget;
     }
     
     void Flee() {
@@ -121,7 +143,10 @@ public class Enemy : MonoBehaviour
         dir.y = Mathf.Round(dir.y);
         dir *= 6;
         
-        target = roundedPos + new Vector3(dir.x, 0, dir.y);
+        Vector3 newTarget = roundedPos + new Vector3(dir.x, 0, dir.y);
+        newTarget.x = Mathf.Clamp(newTarget.x, 0, 144);
+        newTarget.z = Mathf.Clamp(newTarget.z, 0, 144);
+        target = newTarget;
     }
     
     void Listen() {

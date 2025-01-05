@@ -34,6 +34,8 @@ public class Game : MonoBehaviour
 			pickLastProbability = pickLastProbability,
 			openDeadEndProbability = openDeadEndProbability
 		}.Schedule().Complete();
+		maze[maze.Length/2] = MazeFlags.PassageAll;
+		maze[maze.Length/2+1] = MazeFlags.PassageAll;
 		visualization.Visualize(maze);
 	}
 
