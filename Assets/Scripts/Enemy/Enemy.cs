@@ -85,6 +85,7 @@ public class Enemy : MonoBehaviour
             // This state switch is for things that happen on a switch
             switch (state) {
                 case EnemyState.Corrupting:
+                    target = transform.position;
                     CorruptTile();
                     break;
 
@@ -93,6 +94,7 @@ public class Enemy : MonoBehaviour
                     break;
 
                 case EnemyState.Listening:
+                    target = transform.position;
                     break;
 
                 case EnemyState.Moving:
