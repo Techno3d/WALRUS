@@ -8,7 +8,7 @@ using UnityEngine;
 public class EndZone : MonoBehaviour {
     public static event Action GameLost;
     public static event Action GameWon;
-    public static int DefeatedEnemies = 0;
+    public int DefeatedEnemies = 0;
     
     void Start()
     {
@@ -19,14 +19,18 @@ public class EndZone : MonoBehaviour {
     }
 
     void OnTriggerEnter(Collider other) {
+        Settings.score = DefeatedEnemies;
         if(other.tag.Equals("Enemy")) {
             Debug.Log("we lost");
+            Cursor.lockState = CursorLockMode.None;
             GameLost?.Invoke();
         }
 
-        if (other.tag.Equals("PlayerMan") && Enemy.NumEnemies <= 0)
+        Debug.Log(other.tag);
+        if (other.tag.Equals("Player") && Enemy.NumEnemies <= 0)
         {
             Debug.Log("we won");
+            Cursor.lockState = CursorLockMode.None;
             GameWon?.Invoke();
         }
     }

@@ -4,5 +4,5 @@ using UnityEngine;
 
 public static class Settings
 {
-    public static int score = EndZone.DefeatedEnemies;
+    public static int score = 0;
 }
