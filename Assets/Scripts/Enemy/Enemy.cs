@@ -74,7 +74,7 @@ public class Enemy : MonoBehaviour
                 Debug.LogError("How");
                 break;
         }
-
+        Debug.Log(state);
         // Update the stats
         UpdatePlayerStats(body1, ref stats1);
         UpdatePlayerStats(body2, ref stats2);
@@ -114,19 +114,12 @@ public class Enemy : MonoBehaviour
 
     void Move()
     {
-        //Where AI is, but centered on tile
-        Vector3 roundedPos = new Vector3(transform.position.x - 3, transform.position.y, transform.position.z - 3);
-        roundedPos /= 3;
-        roundedPos.x = Mathf.Round(roundedPos.x);
-        roundedPos.z = Mathf.Round(roundedPos.z);
-        roundedPos *= 3;
-
         Vector3 direction = Vector3.one - Vector3.up;
-        direction *= 3;
-        Vector3 newTarget = roundedPos + direction;
-        newTarget.x = Mathf.Clamp(newTarget.x, 0, 144);
-        newTarget.z = Mathf.Clamp(newTarget.z, 0, 144);
-        target = newTarget;
+        direction *= 6;
+        target.x += direction.x;
+        target.z += direction.z;
+        target.x = Mathf.Clamp(target.x, 0, 100);
+        target.z = Mathf.Clamp(target.z, 0, 100);
     }
 
     void Flee()
@@ -154,14 +147,14 @@ public class Enemy : MonoBehaviour
         dir *= 6;
 
         Vector3 newTarget = roundedPos + new Vector3(dir.x, 0, dir.y);
-        newTarget.x = Mathf.Clamp(newTarget.x, 0, 144);
-        newTarget.z = Mathf.Clamp(newTarget.z, 0, 144);
+        newTarget.x = Mathf.Clamp(newTarget.x, 0, 100);
+        newTarget.z = Mathf.Clamp(newTarget.z, 0, 100);
         target = newTarget;
     }
 
     void Listen()
     {
-        // Idk if we need anything here
+        // Provides a break to enhance humanlike behavior
     }
 
     void CorruptTile()
