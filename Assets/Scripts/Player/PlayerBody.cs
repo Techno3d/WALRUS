@@ -29,6 +29,7 @@ public class PlayerBody : MonoBehaviour
     private GameControls controls;
     float airTime = 0f;
     bool wasHeld = false;
+    float damage = 3;
 
     void Awake() {
         controls = new GameControls();
@@ -40,6 +41,7 @@ public class PlayerBody : MonoBehaviour
         applyGravity.gravity = gravity;
         applyGravity.controller = controller;
         applyGravity.enabled = false;
+        EnemyHealth.EnemyDeath += () => damage++;
     }
 
     void Update()
@@ -83,9 +85,9 @@ public class PlayerBody : MonoBehaviour
             beam.transform.localScale = new Vector3(1, 1, hit.distance);
             beam.transform.localRotation = Quaternion.Euler(cam.transform.localEulerAngles.x, Mathf.Atan2(hit.distance, 0.7f)*Mathf.Rad2Deg-90, 0);
             if(hit.collider.CompareTag("Enemy")) {
-                hit.collider.GetComponent<EnemyHealth>().TakeDamage(3*Time.deltaTime);
+                hit.collider.GetComponent<EnemyHealth>().TakeDamage(damage*Time.deltaTime);
             } else if(hit.collider.CompareTag("CorruptionCube")) {
-                hit.collider.GetComponent<CorruptionHealth>().TakeDamage(3*Time.deltaTime);
+                hit.collider.GetComponent<CorruptionHealth>().TakeDamage(damage*Time.deltaTime);
             }
         } else {
             beam.transform.localScale = new Vector3(1, 1, BeamRange);
