@@ -32,7 +32,7 @@ public class EnemyHealth : MonoBehaviour
         if (health <= 0)
         {
             EnemyDeath?.Invoke();
-            // Destroy(gameObject);
+            Destroy(gameObject);
         }
     }
 }
