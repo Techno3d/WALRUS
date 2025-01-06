@@ -7,6 +7,8 @@ using UnityEngine.UI;
 public class EnemyHealth : MonoBehaviour
 {
     [SerializeField]
+    float MaxHealth;
+    [System.NonSerialized]
     public float health;
 
     public Slider healthBar;
@@ -18,7 +20,8 @@ public class EnemyHealth : MonoBehaviour
 
     void Start()
     {
-        healthBar.MaxValue = health;
+        health = MaxHealth;
+        healthBar.maxValue = health;
         healthBar.value = health;
     }
 
