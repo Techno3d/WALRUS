@@ -689,7 +689,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97e3cd52e54540943969edc4a112d9ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetPosition: {x: 15, y: 0, z: 15}
+  enem: {fileID: 5986935088483004851}
+--- !u!114 &5986935088483004851 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4782724741057121218, guid: 466aa8187386c7c0f8ce281eadf93fa4, type: 3}
+  m_PrefabInstance: {fileID: 5986935088483004846}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5986935088483004847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4672e3f57ffc1a4d8ba3075187d7a7f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

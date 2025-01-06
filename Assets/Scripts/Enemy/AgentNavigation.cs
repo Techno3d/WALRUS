@@ -6,18 +6,32 @@ using UnityEngine.AI;
 public class AgentNavigation : MonoBehaviour
 {
     [SerializeField]
-    private Vector3 targetPosition = GetComponent<Enemy>().target;
+    private Enemy enem;
+
+    private Vector3 targetPosition;
+
     // Start is called before the first frame update
     void Start()
     {
-        //destination
-        GetComponent<NavMeshAgent>().destination = targetPosition;
+        if (enem != null)
+        {
+            targetPosition = enem.target; // Initialize targetPosition from enem
+            GetComponent<NavMeshAgent>().destination = targetPosition;
+        }
+        else
+        {
+            Debug.LogError("Enemy (enem) is not assigned in the Inspector!");
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        targetPosition = Enemy.target;
-        GetComponent<NavMeshAgent>().destination = targetPosition;
+        Debug.Log("Current Target: " + targetPosition);
+        if (enem != null)
+        {
+            targetPosition = enem.target;
+            GetComponent<NavMeshAgent>().destination = targetPosition;
+        }
     }
 }
