@@ -39,7 +39,6 @@ public class Game : MonoBehaviour
 		visualization.Visualize(maze);
 		GetComponent<NavMeshSurface>().BuildNavMesh();
 	}
-
 	void OnDestroy()
 	{
 		maze.Dispose();

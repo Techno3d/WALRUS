@@ -23,12 +23,14 @@ public class MouseControl : MonoBehaviour
         transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
         playerBody.Rotate(Vector3.up * deltas.x);
     }
-    
-    void OnEnable() {
+
+    void OnEnable()
+    {
         controls.Enable();
     }
 
-    void OnDisable() {
+    void OnDisable()
+    {
         controls.Disable();
     }
 }
