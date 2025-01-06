@@ -6,6 +6,7 @@ using Random = UnityEngine.Random;
 
 public class Enemy : MonoBehaviour
 {
+    public static float TotalNumEnemies = 0;
     public static float NumEnemies = 0;
     EnemyState state = EnemyState.Moving;
     // This is kind of a markov model
@@ -51,6 +52,7 @@ public class Enemy : MonoBehaviour
     {
         actualModel = referenceModel;
         target = transform.position;
+        TotalNumEnemies++;
         NumEnemies++;
     }
 
