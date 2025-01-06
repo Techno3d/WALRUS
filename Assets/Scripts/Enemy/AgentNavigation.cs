@@ -27,7 +27,6 @@ public class AgentNavigation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("Current Target: " + targetPosition);
         if (enem != null)
         {
             targetPosition = enem.target;

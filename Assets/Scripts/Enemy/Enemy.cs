@@ -14,7 +14,7 @@ public class Enemy : MonoBehaviour
     float[,] referenceModel = {
     //   C    M    F    L
         {0,   0.4f,0.0f,0.6f}, // EnemyState.Corrupting
-        {0,   0.1f,0,   0.9f}, // EnemyState.Moving
+        {0,   0.1f,0,   0.4f}, // EnemyState.Moving
         {0.05f,0.55f,0.2f,0.2f}, // EnemyState.Fleeing
         {0.01f,0.99f,0, 0}  // EnemyState.Listening
     };
@@ -76,13 +76,13 @@ public class Enemy : MonoBehaviour
                 Debug.LogError("How");
                 break;
         }
-        Debug.Log(state);
         // Update the stats
         UpdatePlayerStats(body1, ref stats1);
         UpdatePlayerStats(body2, ref stats2);
         timeClock += Time.deltaTime;
         if (timeClock > actionTime)
         {
+            EnemyState prevState = state;
             updateActualModel();
             SwitchStates();
 
@@ -103,7 +103,11 @@ public class Enemy : MonoBehaviour
                     break;
 
                 case EnemyState.Moving:
-                    Move();
+                    if(prevState == EnemyState.Moving && Vector3.Distance(transform.position, target) < 2) {
+                        // Do nothing?
+                    } else {
+                        Move();
+                    }
                     break;
 
                 default:
@@ -117,11 +121,11 @@ public class Enemy : MonoBehaviour
     void Move()
     {
         Vector3 direction = Vector3.one - Vector3.up;
-        direction *= 6;
+        direction *= 6 * Random.Range(1,3);
         target.x += direction.x;
         target.z += direction.z;
-        target.x = Mathf.Clamp(target.x, 0, 100);
-        target.z = Mathf.Clamp(target.z, 0, 100);
+        target.x = Mathf.Clamp(target.x, 0, 97);
+        target.z = Mathf.Clamp(target.z, 0, 97);
     }
 
     void Flee()
@@ -136,22 +140,16 @@ public class Enemy : MonoBehaviour
             activeBody = body2;
         }
 
-        Vector3 roundedPos = new Vector3(transform.position.x - 3, transform.position.y, transform.position.z - 3);
-        roundedPos /= 3;
-        roundedPos.x = Mathf.Round(roundedPos.x);
-        roundedPos.z = Mathf.Round(roundedPos.z);
-        roundedPos *= 3;
-
         Vector2 dir = new Vector2((transform.position - activeBody.transform.position).x, (transform.position - activeBody.transform.position).z);
         dir.Normalize();
         dir.x = Mathf.Round(dir.x);
         dir.y = Mathf.Round(dir.y);
         dir *= 6;
 
-        Vector3 newTarget = roundedPos + new Vector3(dir.x, 0, dir.y);
-        newTarget.x = Mathf.Clamp(newTarget.x, 0, 100);
-        newTarget.z = Mathf.Clamp(newTarget.z, 0, 100);
-        target = newTarget;
+        target.x += dir.x;
+        target.z += dir.y;
+        target.x = Mathf.Clamp(target.x, 0, 97);
+        target.z = Mathf.Clamp(target.z, 0, 97);
     }
 
     void Listen()
@@ -308,8 +306,7 @@ public class Enemy : MonoBehaviour
         // This means that if moving and fleeing are both 30% chance, the range should have a 30% chance of giving a value between 0 to .3 and a 30% chance from .3 to .6
         // At least in theory.
         float randGen = Random.Range(0.00f, 1.00f);
-        Debug.Log(randGen);
-        DebugPrint2DArr(actualModel);
+        // DebugPrint2DArr(actualModel);
         EnemyState newState = EnemyState.Corrupting;
         if (randGen >= actualModel[(int)state, (int)EnemyState.Corrupting])
         {
