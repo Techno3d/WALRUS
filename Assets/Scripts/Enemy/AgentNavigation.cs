@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class AgentNavigation : MonoBehaviour
 {
     [SerializeField]
-    private Vector3 targetPosition = new Vector3(0, 0, 0);
+    private Vector3 targetPosition = GetComponent<Enemy>().target;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,8 +17,7 @@ public class AgentNavigation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //change target
-        targetPosition += Vector3.forward;
+        targetPosition = Enemy.target;
         GetComponent<NavMeshAgent>().destination = targetPosition;
     }
 }

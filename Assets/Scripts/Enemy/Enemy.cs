@@ -19,7 +19,7 @@ public class Enemy : MonoBehaviour
     };
     float[,] actualModel;
     float timeClock = 0f;
-    Vector3 target = Vector3.zero;
+    public Vector3 target = Vector3.zero;
 
     [Header("Attacks")]
     public GameObject corruptionCube;
@@ -56,7 +56,8 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
-        switch (state) {
+        switch (state)
+        {
             case EnemyState.Corrupting:
                 break;
 
@@ -78,12 +79,14 @@ public class Enemy : MonoBehaviour
         UpdatePlayerStats(body1, ref stats1);
         UpdatePlayerStats(body2, ref stats2);
         timeClock += Time.deltaTime;
-        if(timeClock > actionTime) {
+        if (timeClock > actionTime)
+        {
             updateActualModel();
             SwitchStates();
 
             // This state switch is for things that happen on a switch
-            switch (state) {
+            switch (state)
+            {
                 case EnemyState.Corrupting:
                     target = transform.position;
                     CorruptTile();
@@ -108,15 +111,16 @@ public class Enemy : MonoBehaviour
             timeClock = 0f;
         }
     }
-    
-    void Move() {
+
+    void Move()
+    {
         //Where AI is, but centered on tile
-        Vector3 roundedPos = new Vector3(transform.position.x-3, transform.position.y, transform.position.z-3);
+        Vector3 roundedPos = new Vector3(transform.position.x - 3, transform.position.y, transform.position.z - 3);
         roundedPos /= 3;
         roundedPos.x = Mathf.Round(roundedPos.x);
         roundedPos.z = Mathf.Round(roundedPos.z);
         roundedPos *= 3;
-        
+
         Vector3 direction = Vector3.one - Vector3.up;
         direction *= 3;
         Vector3 newTarget = roundedPos + direction;
@@ -124,42 +128,51 @@ public class Enemy : MonoBehaviour
         newTarget.z = Mathf.Clamp(newTarget.z, 0, 144);
         target = newTarget;
     }
-    
-    void Flee() {
+
+    void Flee()
+    {
         GameObject activeBody;
-        if(stats1.PercentInactive > stats2.PercentInactive) {
+        if (stats1.PercentInactive > stats2.PercentInactive)
+        {
             activeBody = body1;
-        } else {
+        }
+        else
+        {
             activeBody = body2;
         }
 
-        Vector3 roundedPos = new Vector3(transform.position.x-3, transform.position.y, transform.position.z-3);
+        Vector3 roundedPos = new Vector3(transform.position.x - 3, transform.position.y, transform.position.z - 3);
         roundedPos /= 3;
         roundedPos.x = Mathf.Round(roundedPos.x);
         roundedPos.z = Mathf.Round(roundedPos.z);
         roundedPos *= 3;
-        
+
         Vector2 dir = new Vector2((transform.position - activeBody.transform.position).x, (transform.position - activeBody.transform.position).z);
         dir.Normalize();
         dir.x = Mathf.Round(dir.x);
         dir.y = Mathf.Round(dir.y);
         dir *= 6;
-        
+
         Vector3 newTarget = roundedPos + new Vector3(dir.x, 0, dir.y);
         newTarget.x = Mathf.Clamp(newTarget.x, 0, 144);
         newTarget.z = Mathf.Clamp(newTarget.z, 0, 144);
         target = newTarget;
     }
-    
-    void Listen() {
+
+    void Listen()
+    {
         // Idk if we need anything here
     }
-    
-    void CorruptTile() {
+
+    void CorruptTile()
+    {
         GameObject activeBody;
-        if(stats1.PercentInactive > stats2.PercentInactive) {
+        if (stats1.PercentInactive > stats2.PercentInactive)
+        {
             activeBody = body1;
-        } else {
+        }
+        else
+        {
             activeBody = body2;
         }
         // Direction to go in
@@ -168,31 +181,39 @@ public class Enemy : MonoBehaviour
         dir.x = Mathf.Round(dir.x);
         dir.y = Mathf.Round(dir.y);
         dir *= 6;
-        
+
         //Where AI is, but centered on tile
-        Vector2 roundedPos = new Vector2(transform.position.x-3, transform.position.z-3);
+        Vector2 roundedPos = new Vector2(transform.position.x - 3, transform.position.z - 3);
         roundedPos /= 3;
         roundedPos.x = Mathf.Round(roundedPos.x);
         roundedPos.y = Mathf.Round(roundedPos.y);
         roundedPos *= 3;
-        
+
         Vector2 spawnPos = roundedPos + dir;
         Instantiate(corruptionCube, new Vector3(spawnPos.x, 0.5f, spawnPos.y), Quaternion.identity);
-        stats1.PercentInactive = Mathf.Clamp(stats1.PercentInactive-0.4f, 0, 1);
-        stats2.PercentInactive = Mathf.Clamp(stats2.PercentInactive-0.4f, 0, 1);
+        stats1.PercentInactive = Mathf.Clamp(stats1.PercentInactive - 0.4f, 0, 1);
+        stats2.PercentInactive = Mathf.Clamp(stats2.PercentInactive - 0.4f, 0, 1);
     }
-    
+
     // This code updates the model based on the observation
-    void updateActualModel() {
+    void updateActualModel()
+    {
         float activePercentage;
         // Does the AI even see/hear the player?
-        if (stats1.visibility != PlayerVisibility.NotVisible && stats2.visibility != PlayerVisibility.NotVisible) {
+        if (stats1.visibility != PlayerVisibility.NotVisible && stats2.visibility != PlayerVisibility.NotVisible)
+        {
             activePercentage = Mathf.Max(stats1.PercentInactive, stats2.PercentInactive);
-        } else if(stats1.visibility != PlayerVisibility.NotVisible) {
+        }
+        else if (stats1.visibility != PlayerVisibility.NotVisible)
+        {
             activePercentage = stats1.PercentInactive;
-        } else if(stats2.visibility != PlayerVisibility.NotVisible) {
+        }
+        else if (stats2.visibility != PlayerVisibility.NotVisible)
+        {
             activePercentage = stats2.PercentInactive;
-        } else {
+        }
+        else
+        {
             // Could be cool to slowly make reference model into actual, but this should still work
             actualModel = referenceModel;
             return;
@@ -201,65 +222,68 @@ public class Enemy : MonoBehaviour
         // The rest of this code just makes sure the percentages add up to 100%, else we have problems
         // The map function makes sure that the movement/fleeing percent will add up
         float activePercentageCorrupting = mapRange(
-            activePercentage, 
-            0, 1, 
+            activePercentage,
+            0, 1,
             0, 1
-                -referenceModel[(int)EnemyState.Corrupting, (int)EnemyState.Listening]
-                -referenceModel[(int)EnemyState.Corrupting, (int)EnemyState.Corrupting]
+                - referenceModel[(int)EnemyState.Corrupting, (int)EnemyState.Listening]
+                - referenceModel[(int)EnemyState.Corrupting, (int)EnemyState.Corrupting]
         );
         float max = 1
-                -referenceModel[(int)EnemyState.Corrupting, (int)EnemyState.Listening]
-                -referenceModel[(int)EnemyState.Corrupting, (int)EnemyState.Corrupting];
-        actualModel[(int)EnemyState.Corrupting, (int)EnemyState.Moving] = max-activePercentageCorrupting;
+                - referenceModel[(int)EnemyState.Corrupting, (int)EnemyState.Listening]
+                - referenceModel[(int)EnemyState.Corrupting, (int)EnemyState.Corrupting];
+        actualModel[(int)EnemyState.Corrupting, (int)EnemyState.Moving] = max - activePercentageCorrupting;
         actualModel[(int)EnemyState.Corrupting, (int)EnemyState.Fleeing] = activePercentageCorrupting;
 
         float activePercentageMoving = mapRange(
-            activePercentage, 
-            0, 1, 
+            activePercentage,
+            0, 1,
             0, 1
-                -referenceModel[(int)EnemyState.Moving, (int)EnemyState.Listening]
-                -referenceModel[(int)EnemyState.Moving, (int)EnemyState.Corrupting]
+                - referenceModel[(int)EnemyState.Moving, (int)EnemyState.Listening]
+                - referenceModel[(int)EnemyState.Moving, (int)EnemyState.Corrupting]
         );
         max = 1
-                -referenceModel[(int)EnemyState.Moving, (int)EnemyState.Listening]
-                -referenceModel[(int)EnemyState.Moving, (int)EnemyState.Corrupting];
-        actualModel[(int)EnemyState.Moving, (int)EnemyState.Moving] = max-activePercentageMoving;
+                - referenceModel[(int)EnemyState.Moving, (int)EnemyState.Listening]
+                - referenceModel[(int)EnemyState.Moving, (int)EnemyState.Corrupting];
+        actualModel[(int)EnemyState.Moving, (int)EnemyState.Moving] = max - activePercentageMoving;
         actualModel[(int)EnemyState.Moving, (int)EnemyState.Fleeing] = activePercentageMoving;
 
         float activePercentageFleeing = mapRange(
-            activePercentage, 
-            0, 1, 
+            activePercentage,
+            0, 1,
             0, 1
-                -referenceModel[(int)EnemyState.Fleeing, (int)EnemyState.Listening]
-                -referenceModel[(int)EnemyState.Fleeing, (int)EnemyState.Corrupting]
+                - referenceModel[(int)EnemyState.Fleeing, (int)EnemyState.Listening]
+                - referenceModel[(int)EnemyState.Fleeing, (int)EnemyState.Corrupting]
         );
         max = 1
-                -referenceModel[(int)EnemyState.Fleeing, (int)EnemyState.Listening]
-                -referenceModel[(int)EnemyState.Fleeing, (int)EnemyState.Corrupting];
-        actualModel[(int)EnemyState.Fleeing, (int)EnemyState.Moving] = max-activePercentageFleeing;
+                - referenceModel[(int)EnemyState.Fleeing, (int)EnemyState.Listening]
+                - referenceModel[(int)EnemyState.Fleeing, (int)EnemyState.Corrupting];
+        actualModel[(int)EnemyState.Fleeing, (int)EnemyState.Moving] = max - activePercentageFleeing;
         actualModel[(int)EnemyState.Fleeing, (int)EnemyState.Fleeing] = activePercentageFleeing;
 
         float activePercentageListening = mapRange(
-            activePercentage, 
-            0, 1, 
+            activePercentage,
+            0, 1,
             0, 1
-                -referenceModel[(int)EnemyState.Listening, (int)EnemyState.Listening]
-                -referenceModel[(int)EnemyState.Listening, (int)EnemyState.Corrupting]
+                - referenceModel[(int)EnemyState.Listening, (int)EnemyState.Listening]
+                - referenceModel[(int)EnemyState.Listening, (int)EnemyState.Corrupting]
         );
         max = 1
-                -referenceModel[(int)EnemyState.Listening, (int)EnemyState.Listening]
-                -referenceModel[(int)EnemyState.Listening, (int)EnemyState.Corrupting];
-        actualModel[(int)EnemyState.Listening, (int)EnemyState.Moving] = max-activePercentageListening;
+                - referenceModel[(int)EnemyState.Listening, (int)EnemyState.Listening]
+                - referenceModel[(int)EnemyState.Listening, (int)EnemyState.Corrupting];
+        actualModel[(int)EnemyState.Listening, (int)EnemyState.Moving] = max - activePercentageListening;
         actualModel[(int)EnemyState.Listening, (int)EnemyState.Fleeing] = activePercentageListening;
     }
-    
+
     // For Debugging purposes
-    void DebugPrint2DArr(float[,] arr) {
+    void DebugPrint2DArr(float[,] arr)
+    {
         String s = "";
-        for(int i = 0; i < arr.GetLength(0); i++) {
+        for (int i = 0; i < arr.GetLength(0); i++)
+        {
             String a = "";
-            for(int j = 0; j < arr.GetLength(1); j++) {
-                a += " " + arr[i,j];
+            for (int j = 0; j < arr.GetLength(1); j++)
+            {
+                a += " " + arr[i, j];
             }
             s += a + "\n";
         }
@@ -268,11 +292,12 @@ public class Enemy : MonoBehaviour
 
     float mapRange(float x, float in_min, float in_max, float out_min, float out_max)
     {
-      return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+        return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
     }
-    
+
     // I think this is it
-    void SwitchStates() {
+    void SwitchStates()
+    {
         // float maxPercent = -1;
         // int currentState = (int)state;
         // for(int i = 0; i < 4; i++) {
@@ -282,7 +307,7 @@ public class Enemy : MonoBehaviour
         //         state = (EnemyState)i;
         //     }
         // }
-        
+
         // Essentially, the AI might chose to do something rare, like corrupting, sometimes, especially if it isn't sure.
         // This works I think, becuase random.range should have equal chance of giving a value in the range.
         // This means that if moving and fleeing are both 30% chance, the range should have a 30% chance of giving a value between 0 to .3 and a 30% chance from .3 to .6
@@ -291,87 +316,110 @@ public class Enemy : MonoBehaviour
         Debug.Log(randGen);
         DebugPrint2DArr(actualModel);
         EnemyState newState = EnemyState.Corrupting;
-        if(randGen >= actualModel[(int)state,(int)EnemyState.Corrupting]) {
+        if (randGen >= actualModel[(int)state, (int)EnemyState.Corrupting])
+        {
             newState = EnemyState.Moving;
         }
-        if(randGen >= actualModel[(int)state,(int)EnemyState.Corrupting] + actualModel[(int)state,(int)EnemyState.Moving]) {
+        if (randGen >= actualModel[(int)state, (int)EnemyState.Corrupting] + actualModel[(int)state, (int)EnemyState.Moving])
+        {
             newState = EnemyState.Fleeing;
         }
-        if(randGen >= actualModel[(int)state,(int)EnemyState.Corrupting] + actualModel[(int)state,(int)EnemyState.Moving] + actualModel[(int)state,(int)EnemyState.Fleeing]) {
+        if (randGen >= actualModel[(int)state, (int)EnemyState.Corrupting] + actualModel[(int)state, (int)EnemyState.Moving] + actualModel[(int)state, (int)EnemyState.Fleeing])
+        {
             newState = EnemyState.Listening;
         }
         state = newState;
     }
 
-    void UpdatePlayerStats(GameObject body, ref PlayerStats stats) {
+    void UpdatePlayerStats(GameObject body, ref PlayerStats stats)
+    {
         float distance = Vector3.Distance(body.transform.position, transform.position);
 
         // Can you hear?
-        if(distance < HearingDistance)
+        if (distance < HearingDistance)
             stats.visibility = PlayerVisibility.CanHear;
-        else 
+        else
             stats.visibility = PlayerVisibility.NotVisible;
 
         // Can you see?
-        if(distance < SightDistance) {
+        if (distance < SightDistance)
+        {
             RaycastHit hit;
-            if(Physics.Raycast(transform.position, (body.transform.position-transform.position).normalized, out hit, SightDistance) && hit.collider.CompareTag("PlayerBody")) {
+            if (Physics.Raycast(transform.position, (body.transform.position - transform.position).normalized, out hit, SightDistance) && hit.collider.CompareTag("PlayerBody"))
+            {
                 stats.visibility = PlayerVisibility.InSight;
-            } 
+            }
         }
-        
-        if(stats.visibility == PlayerVisibility.NotVisible) {
+
+        if (stats.visibility == PlayerVisibility.NotVisible)
+        {
             // This is so the penalty for being caught isn't applied every frame
             appliedPenalty = false;
             return;
         }
-        
-        if(stats.visibility == PlayerVisibility.InSight) {
+
+        if (stats.visibility == PlayerVisibility.InSight)
+        {
             //Always track when in sight
             stats.MovementDelta = Vector3.Distance(stats.oldPos, body.transform.position);
             stats.oldPos = body.transform.position;
-            if(stats.MovementDelta>0) {
+            if (stats.MovementDelta > 0)
+            {
                 stats.PercentInactive = 1.00f;
-                if(!appliedPenalty && distance < HearingDistance) {
+                if (!appliedPenalty && distance < HearingDistance)
+                {
                     eagerness -= CaughtPenalty;
                     appliedPenalty = true;
                 }
-            } else {
+            }
+            else
+            {
                 // Decays over time
-                stats.PercentInactive -= eagerness*Time.deltaTime/10f;
+                stats.PercentInactive -= eagerness * Time.deltaTime / 10f;
                 stats.PercentInactive = Mathf.Clamp(stats.PercentInactive, 0f, 1f);
             }
-        } else if(state == EnemyState.Listening && stats.visibility != PlayerVisibility.NotVisible) {
+        }
+        else if (state == EnemyState.Listening && stats.visibility != PlayerVisibility.NotVisible)
+        {
             bool failedHearing = stats.visibility == PlayerVisibility.CanHear && Random.Range(0f, 1f) < MisHearingChance;
-            if(!failedHearing) {
+            if (!failedHearing)
+            {
                 stats.MovementDelta = Vector3.Distance(stats.oldPos, body.transform.position);
                 stats.oldPos = body.transform.position;
-                if(stats.MovementDelta > 0) {
-                    stats.PercentInactive += eagerness*Time.deltaTime;
-                    stats.PercentInactive = Mathf.Clamp(stats.PercentInactive, 0f, 1f);
-                } else {
-                    stats.PercentInactive -= eagerness*Time.deltaTime;
+                if (stats.MovementDelta > 0)
+                {
+                    stats.PercentInactive += eagerness * Time.deltaTime;
                     stats.PercentInactive = Mathf.Clamp(stats.PercentInactive, 0f, 1f);
                 }
-            } else {
+                else
+                {
+                    stats.PercentInactive -= eagerness * Time.deltaTime;
+                    stats.PercentInactive = Mathf.Clamp(stats.PercentInactive, 0f, 1f);
+                }
+            }
+            else
+            {
                 stats.MovementDelta = 0;
             }
         }
     }
 }
 
-struct PlayerStats {
+struct PlayerStats
+{
     public Vector3 oldPos;
     public float MovementDelta;
     public float PercentInactive;
     public PlayerVisibility visibility;
 }
 
-enum PlayerVisibility {
+enum PlayerVisibility
+{
     InSight, CanHear, NotVisible
 }
 
-enum EnemyState {
+enum EnemyState
+{
     Corrupting = 0, Moving = 1, Fleeing = 2, Listening = 3
 }
 

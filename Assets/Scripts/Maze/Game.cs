@@ -3,7 +3,7 @@ using Unity.Jobs;
 using Unity.Mathematics;
 using UnityEngine;
 using Random = UnityEngine.Random;
-
+using Unity.AI.Navigation;
 using static Unity.Mathematics.math;
 
 public class Game : MonoBehaviour
@@ -24,7 +24,7 @@ public class Game : MonoBehaviour
 
 	Maze maze;
 
-	void Awake ()
+	void Awake()
 	{
 		maze = new Maze(mazeSize);
 		new GenerateMazeJob
@@ -34,12 +34,13 @@ public class Game : MonoBehaviour
 			pickLastProbability = pickLastProbability,
 			openDeadEndProbability = openDeadEndProbability
 		}.Schedule().Complete();
-		maze[maze.Length/2] = MazeFlags.PassageAll;
-		maze[maze.Length/2+1] = MazeFlags.PassageAll;
+		maze[maze.Length / 2] = MazeFlags.PassageAll;
+		maze[maze.Length / 2 + 1] = MazeFlags.PassageAll;
 		visualization.Visualize(maze);
+		GetComponent<NavMeshSurface>().BuildNavMesh();
 	}
 
-	void OnDestroy ()
+	void OnDestroy()
 	{
 		maze.Dispose();
 	}
