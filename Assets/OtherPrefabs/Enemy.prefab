@@ -289,8 +289,8 @@ MonoBehaviour:
   target: {x: 0, y: 0, z: 0}
   corruptionCube: {fileID: 2322357276072015824, guid: e0e44465234e5089fa2d8490b8bdbf6a, type: 3}
   corruptionTime: 0.5
-  movingTime: 2
-  fleeingTime: 2
+  movingTime: 4
+  fleeingTime: 4
   listeningTime: 0.5
   body1: {fileID: 0}
   body2: {fileID: 0}
