@@ -44,6 +44,11 @@ public class Game : MonoBehaviour
 		}
 		GetComponent<NavMeshSurface>().BuildNavMesh();
 	}
+
+	void Start() {
+		AudioManager.instance.ChangeClip(TypeMusic.GameBG);
+	}
+
 	void OnDestroy()
 	{
 		maze.Dispose();

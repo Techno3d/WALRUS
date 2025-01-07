@@ -29,6 +29,7 @@ public class typewriterUI : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        AudioManager.instance.ChangeClip(TypeMusic.None);
         audioSource = gameObject.AddComponent<AudioSource>();
         audioSource2 = gameObject.AddComponent<AudioSource>();
         audioSource.clip = audioClip;
