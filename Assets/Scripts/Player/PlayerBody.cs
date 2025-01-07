@@ -12,6 +12,7 @@ public class PlayerBody : MonoBehaviour
     public CharacterController controller;
     public MouseControl mouseControl;
     public ApplyGravity applyGravity;
+    public GameObject TheRealModel;
 
     [Header("Speed Settings")]
     public float speed = 12f;
@@ -124,6 +125,7 @@ public class PlayerBody : MonoBehaviour
         timeClock = applyGravity.timeClock;
         applyGravity.enabled = false;
         EnemyHealth.EnemyDeath += Analyze;
+        TheRealModel.SetActive(false);
     }
 
     void OnDisable() {
@@ -136,6 +138,7 @@ public class PlayerBody : MonoBehaviour
         applyGravity.timeClock = timeClock;
         beam.SetActive(false);
         EnemyHealth.EnemyDeath -= Analyze;
+        TheRealModel.SetActive(true);
     }
     
     void Analyze() => damage++;

@@ -34,6 +34,9 @@ public class Enemy : MonoBehaviour
         EnemyState.Listening => listeningTime,
         _ => 1f,
     };
+    
+    public Animator animator;
+    public GameObject AIModel;
 
     // This code controls if the AI thinks a player is active/inactive
     [Header("Player Detection")]
@@ -94,14 +97,20 @@ public class Enemy : MonoBehaviour
                 case EnemyState.Corrupting:
                     target = transform.position;
                     CorruptTile();
+                    animator.SetBool("Listening", false);
+                    animator.SetBool("Walking", false);
                     break;
 
                 case EnemyState.Fleeing:
                     Flee();
+                    animator.SetBool("Listening", false);
+                    animator.SetBool("Walking", true);
                     break;
 
                 case EnemyState.Listening:
                     target = transform.position;
+                    animator.SetBool("Listening", true);
+                    animator.SetBool("Walking", false);
                     break;
 
                 case EnemyState.Moving:
@@ -110,6 +119,8 @@ public class Enemy : MonoBehaviour
                     } else {
                         Move();
                     }
+                    animator.SetBool("Listening", false);
+                    animator.SetBool("Walking", true);
                     break;
 
                 default:
@@ -118,6 +129,11 @@ public class Enemy : MonoBehaviour
             }
             timeClock = 0f;
         }
+        AIModel.transform.rotation = Quaternion.Euler(
+            AIModel.transform.localEulerAngles.x,
+            transform.localEulerAngles.y,
+            AIModel.transform.localEulerAngles.z
+        );
     }
     
     void Move()
