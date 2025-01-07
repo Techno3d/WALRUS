@@ -63,6 +63,7 @@ public class PlayerBody : MonoBehaviour
         velocity.x = Mathf.MoveTowards(velocity.x, move.x*speed, 10f);
         velocity.z = Mathf.MoveTowards(velocity.z, move.z*speed, 10f);
 
+        // THis is for jump
         if(controls.Player.Jump.IsPressed() && airTime < maxAirTime && wasHeld) {
             velocity.y += gravity*Time.deltaTime * (airTime == 0 ? 50 : 1);
             airTime += Time.deltaTime;
@@ -73,12 +74,14 @@ public class PlayerBody : MonoBehaviour
             velocity.y += -gravity * Time.deltaTime;
         }
         
+        // This is for variable jump height
         if(controls.Player.Jump.IsPressed() && controller.isGrounded) {
             wasHeld = true;
         } else if (!controls.Player.Jump.IsPressed() && !controller.isGrounded) {
             wasHeld = false;
         }
         
+        // Final velocity for movement
         controller.Move(velocity * Time.deltaTime);
         
         if(controls.Player.Attack.IsPressed()) {
@@ -89,6 +92,7 @@ public class PlayerBody : MonoBehaviour
         }
     }
 
+    // Laser attack sound can go here
     void AttackBeam()
     {
         RaycastHit hit;

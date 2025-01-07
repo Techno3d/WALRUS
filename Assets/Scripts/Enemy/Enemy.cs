@@ -87,6 +87,8 @@ public class Enemy : MonoBehaviour
             SwitchStates();
 
             // This state switch is for things that happen on a switch
+            // DHRUV you can put the animation switching trigger stuff in here
+            // If you need sound effects, this could also work
             switch (state)
             {
                 case EnemyState.Corrupting:
