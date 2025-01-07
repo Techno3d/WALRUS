@@ -120,8 +120,9 @@ public class Enemy : MonoBehaviour
 
     void Move()
     {
-        Vector3 direction = Vector3.one - Vector3.up;
-        direction *= 6 * Random.Range(1,3);
+        float randomAngle = Random.Range(0f, 90f) * Mathf.Deg2Rad;
+        Vector3 direction = new Vector3(Mathf.Cos(randomAngle), 0, Mathf.Sin(randomAngle));
+        direction *= 6 * Random.Range(1,4);
         target.x += direction.x;
         target.z += direction.z;
         target.x = Mathf.Clamp(target.x, 0, 97);
@@ -362,6 +363,9 @@ public class Enemy : MonoBehaviour
                 {
                     eagerness -= CaughtPenalty;
                     appliedPenalty = true;
+                    if(state == EnemyState.Moving) {
+                        timeClock = actionTime + 1;
+                    }
                 }
             }
             else
