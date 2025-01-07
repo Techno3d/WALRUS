@@ -14,7 +14,6 @@ public class PlayerIcon : MonoBehaviour
         disabled = originalColor;
         disabled.a = 0;
         MainPlayer.SwitchedBody += () => {
-            Debug.Log("AAA");
             isDisabled = !isDisabled;
             if(isDisabled)
                 GetComponent<Image>().color = originalColor;

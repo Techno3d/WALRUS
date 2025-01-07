@@ -96,6 +96,7 @@ public class PlayerBody : MonoBehaviour
             beam.transform.localScale = new Vector3(1, 1, hit.distance);
             beam.transform.localRotation = Quaternion.Euler(cam.transform.localEulerAngles.x, Mathf.Atan2(hit.distance, 0.7f)*Mathf.Rad2Deg-90, 0);
             if(hit.collider.CompareTag("Enemy")) {
+                Debug.Log("We hit the enemy");
                 hit.collider.GetComponent<EnemyHealth>().TakeDamage(damage*Time.deltaTime);
             } else if(hit.collider.CompareTag("CorruptionCube")) {
                 hit.collider.GetComponent<CorruptionHealth>().TakeDamage(damage*Time.deltaTime);

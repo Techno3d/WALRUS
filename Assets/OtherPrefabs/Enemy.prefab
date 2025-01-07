@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7213179347694763051}
   - component: {fileID: 8118837089946998717}
   - component: {fileID: 7584353443792979617}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Foreground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -85,7 +85,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8055211499040681315}
   - component: {fileID: 5454388017584563538}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -352,7 +352,7 @@ GameObject:
   - component: {fileID: 3678322303259954847}
   - component: {fileID: 9188807823214399601}
   - component: {fileID: 3993667551243877182}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -453,7 +453,7 @@ GameObject:
   - component: {fileID: 2127984260001858686}
   - component: {fileID: 8076993028079508877}
   - component: {fileID: 6834890577310657557}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
