@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 using Random = UnityEngine.Random;
 
 // using static Unity.Mathematics.math;
@@ -21,7 +22,8 @@ public class Enemy : MonoBehaviour
     float[,] actualModel;
     float timeClock = 0f;
     public Vector3 target = Vector3.zero;
-
+    [SerializeField]
+    Vector3 endgoal = new Vector3(97, 1, 97);
     [Header("Attacks")]
     public GameObject corruptionCube;
     public float corruptionTime = 0.5f, movingTime = 2f, fleeingTime = 2f, listeningTime = 0.5f;
@@ -140,11 +142,16 @@ public class Enemy : MonoBehaviour
     {
         float randomAngle = Random.Range(0f, 90f) * Mathf.Deg2Rad;
         Vector3 direction = new Vector3(Mathf.Cos(randomAngle), 0, Mathf.Sin(randomAngle));
+        direction = (direction + (endgoal - transform.position).normalized)/2;
         direction *= 6 * Random.Range(1,4);
         target.x += direction.x;
         target.z += direction.z;
         target.x = Mathf.Clamp(target.x, 0, 97);
         target.z = Mathf.Clamp(target.z, 0, 97);
+        if ((endgoal.x - transform.position.x) < 12f && (endgoal.z - transform.position.z) < 12f)
+        {
+            target = endgoal;
+        }
     }
 
     void Flee()
