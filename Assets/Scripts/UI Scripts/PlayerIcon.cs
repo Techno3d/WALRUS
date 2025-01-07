@@ -13,15 +13,23 @@ public class PlayerIcon : MonoBehaviour
         originalColor = GetComponent<Image>().color;
         disabled = originalColor;
         disabled.a = 0;
-        MainPlayer.SwitchedBody += () => {
-            isDisabled = !isDisabled;
-            if(isDisabled)
-                GetComponent<Image>().color = originalColor;
-            else
-                GetComponent<Image>().color = disabled;
-        };
+    }
+    
+    void OnEnable() {
+        MainPlayer.SwitchedBody += Switch;
     }
 
+    void OnDisable() {
+        MainPlayer.SwitchedBody -= Switch;
+    }
+
+    void Switch() {
+        isDisabled = !isDisabled;
+        if(isDisabled)
+            GetComponent<Image>().color = originalColor;
+        else
+            GetComponent<Image>().color = disabled;
+    }
     // Update is called once per frame
     void Update()
     {

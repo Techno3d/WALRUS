@@ -56,6 +56,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7570337671441877400}
     m_Modifications:
+    - target: {fileID: 85174850198920897, guid: f72eedb081f1878cda56bc9f63381b68, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3752270557892242126, guid: f72eedb081f1878cda56bc9f63381b68, type: 3}
       propertyPath: m_Name
       value: PlayerBody
@@ -129,6 +133,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7570337671441877400}
     m_Modifications:
+    - target: {fileID: 85174850198920897, guid: f72eedb081f1878cda56bc9f63381b68, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3752270557892242126, guid: f72eedb081f1878cda56bc9f63381b68, type: 3}
       propertyPath: m_Name
       value: PlayerBody2
