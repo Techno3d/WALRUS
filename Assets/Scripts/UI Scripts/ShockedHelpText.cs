@@ -19,18 +19,25 @@ You can still switch to your other body
         text = GetComponent<TMP_Text>();
     }
     AudioManager audioManager;
+    bool isAudioPlaying = false;
     private void Awake(){
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+
     }
     // Update is called once per frame
     void Update()
     {
         if (mainPlayer.ActiveBody.isShocked) {
-            audioManager.PlaySFX(audioManager.shocked);
+            if (!isAudioPlaying)
+            {
+                audioManager.PlaySFX(audioManager.shocked);
+                isAudioPlaying = true;
+            }
             text.text = actualText.Replace("__", ""+(int)mainPlayer.ActiveBody.TimeLeft);
         }
         else {
             text.text = "";
+            isAudioPlaying = false;
         }
     }
 }

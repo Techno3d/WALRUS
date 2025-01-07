@@ -13,8 +13,9 @@ public class MainPlayer : MonoBehaviour
     private GameControls controls;
     public static event Action SwitchedBody;
     public PlayerBody ActiveBody => isFirstActive ? FirstBody : SecondBody;
-
-    void Awake() {
+AudioManager audioManager;
+    private void Awake(){
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
         controls = new GameControls();
     }
 
@@ -35,6 +36,7 @@ public class MainPlayer : MonoBehaviour
     void SwitchBody(bool isFirstCamActive) {
         FirstBody.enabled = isFirstCamActive;
         SecondBody.enabled = !isFirstCamActive;
+        audioManager.PlaySFX(audioManager.playerSwitch);
         SwitchedBody?.Invoke();
     }
 

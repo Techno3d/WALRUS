@@ -1382,12 +1382,11 @@ MonoBehaviour:
   background: {fileID: 8300000, guid: ef1792fbdad943542bd5fb878ee122d4, type: 3}
   gameBackground: {fileID: 8300000, guid: 7e941b550fed304d6a2c0bca8bf3a38c, type: 3}
   SFX: {fileID: 1773961998}
-  playerShoot: {fileID: 0}
-  playerSwitch: {fileID: 0}
-  win: {fileID: 0}
+  playerShoot: {fileID: 8300000, guid: ba7e9f5dac20d4f949c2e123290bcdcc, type: 3}
+  playerSwitch: {fileID: 8300000, guid: c23dc48f8f3c34214aafdec86a840d9e, type: 3}
   lose: {fileID: 0}
   enemyDie: {fileID: 0}
-  shocked: {fileID: 0}
+  shocked: {fileID: 8300000, guid: 16dc2c08c9d1b4525ba666ddbdf7dc09, type: 3}
 --- !u!1 &1182617198
 GameObject:
   m_ObjectHideFlags: 0

@@ -17,7 +17,10 @@ public class EnemyHealth : MonoBehaviour
     // Probably going to be used by a HUD UI
     // Also could hook up to sound, unless you put the sound into the if statement in the takedamage script
     public static event Action EnemyDeath;
-
+    AudioManager audioManager;
+    private void Awake(){
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+    }
     void Start()
     {
         health = MaxHealth;
@@ -32,6 +35,7 @@ public class EnemyHealth : MonoBehaviour
         healthBar.value = health;
         if (health <= 0)
         {
+            audioManager.PlaySFX(audioManager.enemyDie);
             EnemyDeath?.Invoke();
             Enemy.NumEnemies--;
             Destroy(gameObject);

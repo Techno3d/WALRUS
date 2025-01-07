@@ -8,7 +8,6 @@ public class EnemyToken : MonoBehaviour
     public Sprite token, tokenDead;
     Image component;
     bool isDead = false;
-
     void Start() {
         component = GetComponent<Image>();
     }

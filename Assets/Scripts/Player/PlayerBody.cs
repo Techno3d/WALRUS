@@ -38,8 +38,11 @@ public class PlayerBody : MonoBehaviour
     float timeClock = 0f;
     public float TimeLeft => 10-timeClock;
 
+    AudioManager audioManager;
+
     void Awake() {
         controls = new GameControls();
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
     }
 
     void Start()
@@ -87,6 +90,7 @@ public class PlayerBody : MonoBehaviour
         controller.Move(velocity * Time.deltaTime);
         
         if(controls.Player.Attack.IsPressed()) {
+
             beam.SetActive(true);
             BeamProjector.SetActive(true);
             BeamProjector.transform.localRotation = Quaternion.Euler(
@@ -95,9 +99,14 @@ public class PlayerBody : MonoBehaviour
                 0
             );
             AttackBeam();
+            if (!audioManager.IsSFXPlaying())
+    {
+        audioManager.PlaySFX(audioManager.playerShoot);
+    }
         } else {
-            beam.SetActive(false);
-            BeamProjector.SetActive(false);
+           beam.SetActive(false);
+    BeamProjector.SetActive(false);
+    audioManager.StopSFX();
         }
     }
 

@@ -15,17 +15,32 @@ public class AudioManager : MonoBehaviour
     [SerializeField] AudioSource SFX;
 
     [Header("---- The Effects ----")] 
-    public AudioClip playerShoot; 
-    public AudioClip playerSwitch; 
-    public AudioClip win; 
+    public AudioClip playerShoot; //shoot
+    public AudioClip playerSwitch; //done
     public AudioClip lose; //done
-    public AudioClip enemyDie; 
-    public AudioClip shocked; //done
+    public AudioClip enemyDie; //done
+    public AudioClip shocked; //worksdone
 
 
-    public void PlaySFX(AudioClip clip){
-        SFX.PlayOneShot(clip);
+     public void PlaySFX(AudioClip clip)
+    {
+        SFX.clip = clip;
+        SFX.Play();
     }
+
+    public void StopSFX()
+    {
+        if (SFX.isPlaying)
+        {
+            SFX.Stop();
+        }
+    }
+
+     public bool IsSFXPlaying()
+    {
+        return SFX.isPlaying;
+    }
+    
 
     private void Awake()
     {
@@ -70,5 +85,12 @@ public enum TypeMusic {
     UIMusic, GameBG, None
 }
 
-  
+  /* Keep this commented
+    AudioManager audioManager;
+    private void Awake(){
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+    }
+
+    audioManager.PlaySFX(audioManager.lose);
+  */
 
