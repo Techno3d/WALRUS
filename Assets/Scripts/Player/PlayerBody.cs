@@ -29,7 +29,7 @@ public class PlayerBody : MonoBehaviour
     private GameControls controls;
     float airTime = 0f;
     bool wasHeld = false;
-    float damage = 3;
+    static float damage = 3;
 
     void Awake() {
         controls = new GameControls();
@@ -41,7 +41,6 @@ public class PlayerBody : MonoBehaviour
         applyGravity.gravity = gravity;
         applyGravity.controller = controller;
         applyGravity.enabled = false;
-        EnemyHealth.EnemyDeath += () => damage++;
     }
 
     void Update()
@@ -102,6 +101,7 @@ public class PlayerBody : MonoBehaviour
         mouseControl.enabled = true;
         velocity = applyGravity.velocity;
         applyGravity.enabled = false;
+        EnemyHealth.EnemyDeath += Analyze;
     }
 
     void OnDisable() {
@@ -112,5 +112,8 @@ public class PlayerBody : MonoBehaviour
         applyGravity.enabled = true;
         applyGravity.velocity = velocity;
         beam.SetActive(false);
+        EnemyHealth.EnemyDeath -= Analyze;
     }
+    
+    void Analyze() => damage++;
 }
