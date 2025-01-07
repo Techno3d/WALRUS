@@ -9,6 +9,7 @@ TagManager:
   - PlayerMan
   - CorruptionCube
   - ShockedFloor
+  - Audio
   layers:
   - Default
   - TransparentFX

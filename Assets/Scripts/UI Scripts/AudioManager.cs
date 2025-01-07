@@ -3,12 +3,29 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
+    [Header("---- Some Stuff ----")]
     [SerializeField] AudioSource musicSource;
 
     public AudioClip background;
     public AudioClip gameBackground;
     public static AudioManager instance;
     TypeMusic type = TypeMusic.UIMusic;
+
+    [Header("---- The Source ----")]
+    [SerializeField] AudioSource SFX;
+
+    [Header("---- The Effects ----")] 
+    public AudioClip playerShoot; 
+    public AudioClip playerSwitch; 
+    public AudioClip win; 
+    public AudioClip lose; //done
+    public AudioClip enemyDie; 
+    public AudioClip shocked; //done
+
+
+    public void PlaySFX(AudioClip clip){
+        SFX.PlayOneShot(clip);
+    }
 
     private void Awake()
     {
@@ -52,3 +69,6 @@ public class AudioManager : MonoBehaviour
 public enum TypeMusic {
     UIMusic, GameBG, None
 }
+
+  
+
