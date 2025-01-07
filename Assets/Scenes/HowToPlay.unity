@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028331, g: 0.2257133, b: 0.3069217, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -171,7 +171,7 @@ GameObject:
   - component: {fileID: 96092900}
   - component: {fileID: 96092899}
   m_Layer: 5
-  m_Name: Lore Text
+  m_Name: Objectives Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1022,7 +1022,7 @@ GameObject:
   - component: {fileID: 753271578}
   - component: {fileID: 753271577}
   m_Layer: 5
-  m_Name: Lore Title Card
+  m_Name: Objectives Title Card
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1885,10 +1885,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Controls:\n\nW,A,S,D --- Move. \t     \nSpace --- Jump (not needed)\nLeft
-    Click --- Fire laser\t      \n     Tab --- Switch Bodies (2 bodies)\n\n You have
-    2 bodies that you can switch between.\nYou shoot a binary beam that overwrites
-    the AI, destroying them."
+  m_text: "W,A,S,D --- Move. \t     \nSpace --- Jump (not needed)\nLeft Click ---
+    Fire laser\t      \n     Tab --- Switch Bodies (2 bodies)\n\n You have 2 bodies
+    that you can switch between.\nYou shoot a binary beam that overwrites the AI,
+    destroying them."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

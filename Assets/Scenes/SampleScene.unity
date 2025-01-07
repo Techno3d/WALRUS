@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18029124, g: 0.22572401, b: 0.3069303, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028331, g: 0.2257133, b: 0.3069217, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -522,11 +522,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2127984260001858686, guid: 466aa8187386c7c0f8ce281eadf93fa4, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2127984260001858686, guid: 466aa8187386c7c0f8ce281eadf93fa4, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4782724741057121218, guid: 466aa8187386c7c0f8ce281eadf93fa4, type: 3}
       propertyPath: body1
@@ -539,6 +539,10 @@ PrefabInstance:
     - target: {fileID: 6639429711031012761, guid: 466aa8187386c7c0f8ce281eadf93fa4, type: 3}
       propertyPath: m_Name
       value: Enemy (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6639429711031012761, guid: 466aa8187386c7c0f8ce281eadf93fa4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6928888833972441733, guid: 466aa8187386c7c0f8ce281eadf93fa4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -820,6 +824,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f97561d3899c3a3409a31456a58fadf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DefeatedEnemies: 0
 --- !u!1001 &1526393516
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -834,11 +839,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2127984260001858686, guid: 466aa8187386c7c0f8ce281eadf93fa4, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2127984260001858686, guid: 466aa8187386c7c0f8ce281eadf93fa4, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4782724741057121218, guid: 466aa8187386c7c0f8ce281eadf93fa4, type: 3}
       propertyPath: body1
@@ -851,6 +856,10 @@ PrefabInstance:
     - target: {fileID: 6639429711031012761, guid: 466aa8187386c7c0f8ce281eadf93fa4, type: 3}
       propertyPath: m_Name
       value: Enemy (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6639429711031012761, guid: 466aa8187386c7c0f8ce281eadf93fa4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6928888833972441733, guid: 466aa8187386c7c0f8ce281eadf93fa4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -999,6 +1008,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 6639429711031012761, guid: 466aa8187386c7c0f8ce281eadf93fa4, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6928888833972441733, guid: 466aa8187386c7c0f8ce281eadf93fa4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 91.67
@@ -1123,11 +1136,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2127984260001858686, guid: 466aa8187386c7c0f8ce281eadf93fa4, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2127984260001858686, guid: 466aa8187386c7c0f8ce281eadf93fa4, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4782724741057121218, guid: 466aa8187386c7c0f8ce281eadf93fa4, type: 3}
       propertyPath: body1
@@ -1140,6 +1153,10 @@ PrefabInstance:
     - target: {fileID: 6639429711031012761, guid: 466aa8187386c7c0f8ce281eadf93fa4, type: 3}
       propertyPath: m_Name
       value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 6639429711031012761, guid: 466aa8187386c7c0f8ce281eadf93fa4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6928888833972441733, guid: 466aa8187386c7c0f8ce281eadf93fa4, type: 3}
       propertyPath: m_LocalPosition.x
