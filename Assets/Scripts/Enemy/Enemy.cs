@@ -22,6 +22,9 @@ public class Enemy : MonoBehaviour
     float timeClock = 0f;
     public Vector3 target = Vector3.zero;
 
+    bool isShocked;
+    float shockedTimer = 0f;
+
     [Header("Attacks")]
     public GameObject corruptionCube;
     public float corruptionTime = 0.5f, movingTime = 2f, fleeingTime = 2f, listeningTime = 0.5f;
@@ -58,6 +61,13 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
+        if(shockedTimer > 5) {
+            isShocked = false;
+        }
+        if(isShocked) {
+            shockedTimer += Time.deltaTime;
+            return;
+        }
         switch (state)
         {
             case EnemyState.Corrupting:
@@ -116,6 +126,14 @@ public class Enemy : MonoBehaviour
             }
             timeClock = 0f;
         }
+    }
+    
+    public void Shock() {
+        // Sometimes they just be winning
+        if(Random.Range(0, 1f) < 0.2) {
+            return;
+        }
+        isShocked = true;
     }
 
     void Move()

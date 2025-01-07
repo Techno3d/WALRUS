@@ -30,6 +30,11 @@ public class PlayerBody : MonoBehaviour
     float airTime = 0f;
     bool wasHeld = false;
     static float damage = 3;
+    
+    [System.NonSerialized]
+    public bool isShocked = false;
+    float timeClock = 0f;
+    public float TimeLeft => 10-timeClock;
 
     void Awake() {
         controls = new GameControls();
@@ -45,6 +50,13 @@ public class PlayerBody : MonoBehaviour
 
     void Update()
     {
+        if(timeClock > 10) {
+            isShocked = false;
+        }
+        if(isShocked) {
+            timeClock += Time.deltaTime;
+            return;
+        }
         Vector2 movement = controls.Player.Movement.ReadValue<Vector2>();
         Vector3 move = transform.right * movement.x + transform.forward * movement.y;
         move = Vector3.ClampMagnitude(move, 1);
@@ -87,7 +99,10 @@ public class PlayerBody : MonoBehaviour
                 hit.collider.GetComponent<EnemyHealth>().TakeDamage(damage*Time.deltaTime);
             } else if(hit.collider.CompareTag("CorruptionCube")) {
                 hit.collider.GetComponent<CorruptionHealth>().TakeDamage(damage*Time.deltaTime);
+            } else if(hit.collider.CompareTag("ShockedFloor")) {
+                hit.collider.GetComponentInParent<Shock>().TakeDamage(damage*Time.deltaTime);
             }
+
         } else {
             beam.transform.localScale = new Vector3(1, 1, BeamRange);
             beam.transform.localRotation = Quaternion.Euler(cam.transform.localEulerAngles.x, Mathf.Atan2(BeamRange, 0.7f)*Mathf.Rad2Deg-90, 0);
@@ -116,4 +131,9 @@ public class PlayerBody : MonoBehaviour
     }
     
     void Analyze() => damage++;
+    
+    public void Shock() {
+        isShocked = true;
+        timeClock = 0f;
+    }
 }
