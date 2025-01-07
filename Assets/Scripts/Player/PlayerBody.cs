@@ -95,6 +95,7 @@ public class PlayerBody : MonoBehaviour
         if(Physics.Raycast(transform.position, transform.forward, out hit, BeamRange)) {
             beam.transform.localScale = new Vector3(1, 1, hit.distance);
             beam.transform.localRotation = Quaternion.Euler(cam.transform.localEulerAngles.x, Mathf.Atan2(hit.distance, 0.7f)*Mathf.Rad2Deg-90, 0);
+            Debug.Log(hit.collider.name + " " + hit.collider.tag);
             if(hit.collider.CompareTag("Enemy")) {
                 Debug.Log("We hit the enemy");
                 hit.collider.GetComponent<EnemyHealth>().TakeDamage(damage*Time.deltaTime);

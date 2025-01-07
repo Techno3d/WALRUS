@@ -46,7 +46,7 @@ public class Game : MonoBehaviour
 	}
 
 	void Start() {
-		AudioManager.instance.ChangeClip(TypeMusic.GameBG);
+		AudioManager.instance?.ChangeClip(TypeMusic.GameBG);
 	}
 
 	void OnDestroy()

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class PlayerIcon : MonoBehaviour
 {
-    public bool isDisabled = false;
+    public bool isDisabled;
     Color originalColor;
     Color disabled;
     void Start()
