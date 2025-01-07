@@ -8,9 +8,11 @@ public class ApplyGravity : MonoBehaviour
     public float gravity = 9.81f;
     public CharacterController controller;
     public  Vector3 velocity = Vector3.zero;
+    public float timeClock;
 
     void Update()
     {
+        timeClock += Time.deltaTime;
         if(controller == null) 
             return;
         if(controller.isGrounded) {

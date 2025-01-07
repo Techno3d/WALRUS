@@ -115,6 +115,7 @@ public class PlayerBody : MonoBehaviour
         audioListener.enabled = true;
         mouseControl.enabled = true;
         velocity = applyGravity.velocity;
+        timeClock = applyGravity.timeClock;
         applyGravity.enabled = false;
         EnemyHealth.EnemyDeath += Analyze;
     }
@@ -126,6 +127,7 @@ public class PlayerBody : MonoBehaviour
         mouseControl.enabled = false;
         applyGravity.enabled = true;
         applyGravity.velocity = velocity;
+        applyGravity.timeClock = timeClock;
         beam.SetActive(false);
         EnemyHealth.EnemyDeath -= Analyze;
     }
