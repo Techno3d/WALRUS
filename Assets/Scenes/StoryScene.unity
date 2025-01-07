@@ -1679,6 +1679,8 @@ MonoBehaviour:
   timeBtwChars: 0.1
   leadingChar: 
   leadingCharBeforeDelay: 0
+  audioClip: {fileID: 8300000, guid: 72b12b5c8bd3db84ebf8fd4ea254bf19, type: 3}
+  audioClip2: {fileID: 8300000, guid: 5cd551fe808ead7409a66a551bc75a40, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
