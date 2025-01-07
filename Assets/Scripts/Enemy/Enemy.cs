@@ -6,8 +6,8 @@ using Random = UnityEngine.Random;
 
 public class Enemy : MonoBehaviour
 {
-    public static float TotalNumEnemies = 0;
-    public static float NumEnemies = 0;
+    public static int TotalNumEnemies = 0;
+    public static int NumEnemies = 0;
     EnemyState state = EnemyState.Moving;
     // This is kind of a markov model
     // Essentially, using the player stats array, I will change this matrix. Not really a POMDP or an HMM
