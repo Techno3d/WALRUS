@@ -13,6 +13,7 @@ public class PlayerBody : MonoBehaviour
     public MouseControl mouseControl;
     public ApplyGravity applyGravity;
     public GameObject TheRealModel;
+    public GameObject BeamProjector;
 
     [Header("Speed Settings")]
     public float speed = 12f;
@@ -87,9 +88,16 @@ public class PlayerBody : MonoBehaviour
         
         if(controls.Player.Attack.IsPressed()) {
             beam.SetActive(true);
+            BeamProjector.SetActive(true);
+            BeamProjector.transform.localRotation = Quaternion.Euler(
+                -2,
+                -15,
+                0
+            );
             AttackBeam();
         } else {
             beam.SetActive(false);
+            BeamProjector.SetActive(false);
         }
     }
 
