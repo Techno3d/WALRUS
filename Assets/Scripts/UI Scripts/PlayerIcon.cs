@@ -13,7 +13,6 @@ public class PlayerIcon : MonoBehaviour
         originalColor = GetComponent<Image>().color;
         disabled = originalColor;
         disabled.a = 0;
-        Debug.Log(originalColor + " " + disabled);
         Switch();
         Switch();
     }
@@ -28,7 +27,6 @@ public class PlayerIcon : MonoBehaviour
 
     void Switch() {
         isDisabled = !isDisabled;
-        Debug.Log("We switched " + gameObject.name + " to " + isDisabled);
         if(isDisabled)
             GetComponent<Image>().color = originalColor;
         else
