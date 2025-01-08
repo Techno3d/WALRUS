@@ -13,6 +13,8 @@ public class ApplyGravity : MonoBehaviour
     void Update()
     {
         timeClock += Time.deltaTime;
+        velocity.x = 0f;
+        velocity.z = 0f;
         if(controller == null) 
             return;
         if(controller.isGrounded) {
