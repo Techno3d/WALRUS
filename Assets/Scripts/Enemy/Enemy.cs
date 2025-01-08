@@ -59,6 +59,7 @@ public class Enemy : MonoBehaviour
         target = transform.position;
         TotalNumEnemies++;
         NumEnemies++;
+        EnemyHealth.EnemyDeath += () => state = EnemyState.Corrupting;
     }
 
     void Update()

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028331, g: 0.2257133, b: 0.3069217, a: 1}
+  m_IndirectSpecularColor: {r: 0.18029124, g: 0.22572401, b: 0.3069303, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -216,16 +216,13 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '-Prevent the enemies from reaching the goal zone, indicated by the glowing
-    black floor.
+  m_text: '1. Prevent viruses from reaching the goal zone, indicated by the glowing
+    black floor (where you spawn).
 
-    -Eliminated all of the viruses.
+    2. Eliminated all of the viruses.
 
-
-    You win when all viruses
-    are dead.
-
-    You lose if a virus reaches the goal.
+    3.
+    Get back to the goal zone to complete mission.
 
 
     Good Luck.'
@@ -2337,6 +2334,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicSource: {fileID: 663246643}
   background: {fileID: 8300000, guid: ef1792fbdad943542bd5fb878ee122d4, type: 3}
+  gameBackground: {fileID: 0}
+  SFX: {fileID: 0}
+  playerShoot: {fileID: 0}
+  playerSwitch: {fileID: 0}
+  lose: {fileID: 0}
+  enemyDie: {fileID: 0}
+  shocked: {fileID: 0}
 --- !u!4 &1890566065
 Transform:
   m_ObjectHideFlags: 0
