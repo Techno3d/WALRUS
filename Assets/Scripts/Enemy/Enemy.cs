@@ -16,7 +16,7 @@ public class Enemy : MonoBehaviour
     //   C    M    F    L
         {0,   0.4f,0.0f,0.6f}, // EnemyState.Corrupting
         {0,   0.1f,0,   0.4f}, // EnemyState.Moving
-        {0.05f,0.55f,0.2f,0.2f}, // EnemyState.Fleeing
+        {0.08f,0.55f,0.2f,0.2f}, // EnemyState.Fleeing
         {0.01f,0.99f,0, 0}  // EnemyState.Listening
     };
     float[,] actualModel;
@@ -47,8 +47,8 @@ public class Enemy : MonoBehaviour
     public float SightDistance = 15f;
     public float HearingDistance = 10f;
     public float MisHearingChance = 0.1f;
-    public float CaughtPenalty = -0.01f;
-    float eagerness = 0.2f;
+    public float CaughtPenalty = -0.05f;
+    float eagerness = 0.3f;
     bool appliedPenalty = false;
     PlayerStats stats1 = new PlayerStats();
     PlayerStats stats2 = new PlayerStats();
@@ -202,7 +202,7 @@ public class Enemy : MonoBehaviour
         dir *= 6;
 
         //Where AI is, but centered on tile
-        Vector2 roundedPos = new Vector2(transform.position.x - 3, transform.position.z - 3);
+        Vector2 roundedPos = new Vector2(transform.position.x, transform.position.z);
         roundedPos /= 3;
         roundedPos.x = Mathf.Round(roundedPos.x);
         roundedPos.y = Mathf.Round(roundedPos.y);
@@ -384,13 +384,13 @@ public class Enemy : MonoBehaviour
             if (stats.MovementDelta > 0)
             {
                 stats.PercentInactive = 1.00f;
+                if(state == EnemyState.Moving) {
+                    timeClock = actionTime + 1;
+                }
                 if (!appliedPenalty && distance < HearingDistance)
                 {
                     eagerness -= CaughtPenalty;
                     appliedPenalty = true;
-                    if(state == EnemyState.Moving) {
-                        timeClock = actionTime + 1;
-                    }
                 }
             }
             else
