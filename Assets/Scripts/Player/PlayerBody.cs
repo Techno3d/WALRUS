@@ -14,6 +14,7 @@ public class PlayerBody : MonoBehaviour
     public ApplyGravity applyGravity;
     public GameObject TheRealModel;
     public GameObject BeamProjector;
+    public GameObject DirectionIndicator;
 
     [Header("Speed Settings")]
     public float speed = 12f;
@@ -55,6 +56,7 @@ public class PlayerBody : MonoBehaviour
 
     void Update()
     {
+        UpdateDirectionIndicator();
         if(timeClock > 10) {
             isShocked = false;
         }
@@ -162,5 +164,21 @@ public class PlayerBody : MonoBehaviour
     public void Shock() {
         isShocked = true;
         timeClock = 0f;
+    }
+    
+    void UpdateDirectionIndicator() {
+        RaycastHit hit;
+        if(Physics.Raycast(transform.position, Vector3.down, out hit, 50)) {
+            DirectionIndicator.transform.position = hit.point + Vector3.up*0.05f;
+            Vector3 hi = new Vector3(72, 0, 72) - transform.position;
+            hi.z *= -1;
+            DirectionIndicator.transform.rotation = Quaternion.Euler(
+                90,
+                Mathf.Atan2(hi.z, hi.x) * Mathf.Rad2Deg,
+                0
+            );
+            Debug.Log(Mathf.Atan2(hi.z,hi.x)*Mathf.Rad2Deg);
+        } else {
+        }
     }
 }
