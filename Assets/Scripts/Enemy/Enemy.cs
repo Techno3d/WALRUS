@@ -174,8 +174,17 @@ public class Enemy : MonoBehaviour
 
         target.x += dir.x;
         target.z += dir.y;
-        target.x = Mathf.Clamp(target.x, 0, 97);
-        target.z = Mathf.Clamp(target.z, 0, 97);
+        if(target.x > 98 || target.z > 98) {
+            if(target.x > 98) {
+                target.x = transform.position.x;
+            }
+            if(target.z > 98) {
+                target.z = transform.position.z;
+            }
+        } else {
+            target.x = Mathf.Clamp(target.x, 0, 97);
+            target.z = Mathf.Clamp(target.z, 0, 97);
+        }
     }
 
     void Listen()
